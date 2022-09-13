@@ -2,7 +2,9 @@
   "recommendations": [
     "Vue.volar",
     "dbaeumer.vscode-eslint",
-    "christian-kohler.npm-intellisense",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "vunguyentuan.vscode-postcss",
+    "stylelint.vscode-stylelint",
+    "christian-kohler.npm-intellisense"
   ]
 }

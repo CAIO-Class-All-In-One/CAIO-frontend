@@ -1,0 +1,23 @@
+@import "./ep.css";
+
+:root {
+    --el-color-primary: #333;
+}
+
+body {
+    composes: box form "./el.css";
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    margin: 0;
+}
+
+a {
+    color: var(--el-color-primary);
+}
+
+code {
+    border-radius: 2px;
+    padding: 2px 4px;
+    background-color: var(--el-color-primary-light-9);
+    color: var(--el-color-primary);
+}

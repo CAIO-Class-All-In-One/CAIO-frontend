@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider namespace="ep">
+  <el-config-provider namespace="el">
     <BaseHeader />
     <div style="display: flex">
       <BaseSide />
@@ -14,7 +14,7 @@
 <style>
 #app {
   text-align: center;
-  color: var(--ep-text-color-primary);
+  color: var(--el-text-color-primary);
 }
 
 .element-plus-logo {

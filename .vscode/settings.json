@@ -2,5 +2,20 @@
     "[vue]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "editor.suggest.showWords": false
+    "[postcss]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    },
+    "eslint.validate": [
+        "typescript",
+        "vue"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.stylelint": true
+    },
+    "editor.suggest.showWords": false,
+    "typescript.suggest.paths": false,
+    "javascript.suggest.paths": false,
+    "css.validate": false,
+    "prettier.prettierPath": "120",
+    "prettier.tabWidth": 2
 }
