@@ -1,24 +1,42 @@
 {
   "name": "caio-frontend",
+  "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "deploy": "echo todo..."
   },
   "dependencies": {
-    "pinia": "^2.0.21",
-    "vue": "^3.2.38",
+    "element-plus": "^2.2.16",
+    "gsap": "^3.11.1",
+    "pinia": "^2.0.22",
+    "vue": "^3.2.39",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.4",
-    "@vitejs/plugin-vue": "^3.0.3",
-    "@vue/eslint-config-prettier": "^7.0.0",
-    "eslint": "^8.22.0",
-    "eslint-plugin-vue": "^9.3.0",
+    "@iconify-prerendered/vue-uil": "^0.11.1656183367",
+    "@types/node": "^18.7.17",
+    "@typescript-eslint/parser": "^5.37.0",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "cssnano": "^5.1.13",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "postcss-preset-env": "^7.8.1",
     "prettier": "^2.7.1",
-    "vite": "^3.0.9"
-  }
+    "stylelint": "^14.11.0",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^28.0.0",
+    "typescript": "^4.8.3",
+    "unplugin-element-plus": "^0.4.1",
+    "unplugin-vue-components": "^0.22.7",
+    "vite": "^3.1.0",
+    "vitest": "^0.23.2",
+    "vue-tsc": "^0.40.13"
+  },
+  "browserslist": "defaults",
+  "license": "Apache-2.0"
 }

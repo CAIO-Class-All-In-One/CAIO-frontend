@@ -1,3 +1,11 @@
 {
-  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+  "recommendations": [
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "vunguyentuan.vscode-postcss",
+    "cpylua.language-postcss",
+    "stylelint.vscode-stylelint",
+    "christian-kohler.npm-intellisense"
+  ]
 }
