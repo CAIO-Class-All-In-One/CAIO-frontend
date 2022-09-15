@@ -3,7 +3,7 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[postcss]": {
-        "editor.defaultFormatter": "stylelint.vscode-stylelint"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "eslint.validate": [
         "typescript",
@@ -16,6 +16,6 @@
     "typescript.suggest.paths": false,
     "javascript.suggest.paths": false,
     "css.validate": false,
-    "prettier.prettierPath": "120",
+    "prettier.printWidth": 120,
     "prettier.tabWidth": 2
 }
