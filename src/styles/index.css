@@ -4,10 +4,11 @@
   --color-text-normal: #333;
   --page-idnex-header-height: 10vh;
   --page-index-main-height: 85vh;
-  --page-index-footer-height: calc(
-    100vh - var(--page-idnex-header-height) - var(--page-index-main-height)
-  );
+  --page-index-footer-height: calc(100vh - var(--page-idnex-header-height) - var(--page-index-main-height));
   --el-box-shadow-lighter: 0 0 12px 0 rgba(0 0 0/ 12%);
+  --el-color-primary: #c2185b;
+  --el-color-primary-light-3: #ec407a;
+  --el-color-primary-dark-2: #880e4f;
 }
 
 * {
@@ -17,8 +18,8 @@
 }
 
 body {
-  font-family: "Roboto Serif", "Noto Sans SC", Helvetica, "PingFang SC",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: "Roboto Serif", "Noto Sans SC", Helvetica, "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
   font-size: 16px;
   color: var(--color-text-normal);
 }

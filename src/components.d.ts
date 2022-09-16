@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BaseFooter: typeof import('./components/layouts/BaseFooter.vue')['default']
     BaseHeader: typeof import('./components/layouts/BaseHeader.vue')['default']
     BaseSide: typeof import('./components/layouts/BaseSide.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -15,12 +16,12 @@ declare module '@vue/runtime-core' {
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElRow: typeof import('element-plus/es')['ElRow']
-    ElSpace: typeof import('element-plus/es')['ElSpace']
-    PageIndex: typeof import('./components/PageIndex.vue')['default']
-    PageIndexHeader: typeof import('./components/layouts/PageIndexHeader.vue')['default']
+    LoginForm: typeof import('./components/layouts/LoginForm.vue')['default']
+    LoginMain: typeof import('./components/layouts/LoginMain.vue')['default']
+    PageHomeHeader: typeof import('./components/layouts/PageHomeHeader.vue')['default']
+    RegisterForm: typeof import('./components/layouts/RegisterForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

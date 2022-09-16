@@ -1,11 +1,7 @@
-<script setup lang="ts">
-import { IconCube } from "@iconify-prerendered/vue-uil";
-</script>
-
 <template>
   <el-container>
     <el-header>
-      <page-index-header />
+      <page-home-header />
     </el-header>
     <el-main>
       <el-row justify="center">
@@ -20,7 +16,9 @@ import { IconCube } from "@iconify-prerendered/vue-uil";
         </el-col>
       </el-row>
     </el-main>
-    <el-footer> ©2022<el-divider direction="vertical" /> CAIO <IconCube /> 项目开发组 </el-footer>
+    <el-footer>
+      <base-footer />
+    </el-footer>
   </el-container>
 </template>
 
@@ -40,14 +38,11 @@ main {
   flex-direction: column;
   justify-content: center;
   height: var(--page-index-main-height);
-}
-
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: #f6f2ee solid 1px;
-  height: var(--page-index-footer-height);
+  & h1 {
+    background: linear-gradient(135deg, rgb(255, 248, 134) 0%, rgb(240, 114, 182) 100%);
+    color: transparent;
+    background-clip: text;
+  }
 }
 
 #logo {
@@ -70,10 +65,11 @@ footer {
 }
 
 #btn-start {
-  transition: all 0.3s;
   margin-top: 2em;
-  font-size: 1.5rem;
+  font-weight: bold;
+  font-size: 1rem;
   height: fit-content;
+  transition: all 0.3s;
 }
 
 @keyframes logo-rotate {
