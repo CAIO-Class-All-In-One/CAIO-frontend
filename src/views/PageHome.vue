@@ -1,3 +1,31 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useTestLogin } from "~/composables/index";
+
+const router = useRouter();
+
+onMounted(async () => {
+  const isLogin: boolean = (await useTestLogin()).data.login;
+  if (isLogin) {
+    router.push("/app");
+  }
+});
+
+const clickHandler = () => {
+  const result = useTestLogin();
+  result
+    .then((v) => v.data.login)
+    .then((login) => {
+      if (login) {
+        router.push("/app");
+      } else {
+        router.push("/account/login");
+      }
+    });
+};
+</script>
+
 <template>
   <el-container>
     <el-header>
@@ -7,11 +35,11 @@
       <el-row justify="center">
         <el-col :span="8">
           <div id="main-description">
-            <img id="logo" src="/icon.png" alt="logo" width="256" height="256" role="img" />
+            <img id="logo" src="/logo.png" alt="logo" width="256" height="256" role="img" />
             <h1>CAIO</h1>
             <p>Class All In One</p>
             <p>最舒适的课表查看体验</p>
-            <el-button id="btn-start" type="primary">立即使用</el-button>
+            <el-button id="btn-start" type="primary" @click="clickHandler">立即使用</el-button>
           </div>
         </el-col>
       </el-row>
@@ -28,16 +56,14 @@ header {
   grid-column: full;
   align-items: center;
   padding: calc(3em / 4) 1em;
-  height: var(--page-idnex-header-height);
+  height: var(--page-index-header-height);
   background-color: rgba(255 255 255 / 0.75);
   box-shadow: 0 1px 4px 0 hsl(0deg 0% 0% / 20%);
 }
 
 main {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: var(--page-index-main-height);
+  min-height: 670px;
   & h1 {
     background: linear-gradient(135deg, rgb(255, 248, 134) 0%, rgb(240, 114, 182) 100%);
     color: transparent;
@@ -66,7 +92,6 @@ main {
 
 #btn-start {
   margin-top: 2em;
-  font-weight: bold;
   font-size: 1rem;
   height: fit-content;
   transition: all 0.3s;

@@ -10,30 +10,31 @@ const pathSrc = path.resolve(__dirname, "src");
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    server: {
-        proxy: {
-            "/greeting": {
-                target: "http://localhost:8080",
-                changeOrigin: true,
-            },
-        },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
-    resolve: {
-        alias: {
-            "~/": `${pathSrc}/`,
-        },
+  },
+  resolve: {
+    alias: {
+      "~/": `${pathSrc}/`,
     },
-    css: {
-        devSourcemap: true,
-    },
-    plugins: [
-        vue(),
-        Components({
-            extensions: ["vue", "md"],
-            include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-            resolvers: [ElementPlusResolver()],
-            dts: "src/components.d.ts",
-        }),
-        ElementPlus(),
-    ],
+  },
+  css: {
+    devSourcemap: true,
+  },
+  plugins: [
+    vue(),
+    Components({
+      extensions: ["vue", "md"],
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      resolvers: [ElementPlusResolver()],
+      dts: "src/components.d.ts",
+    }),
+    ElementPlus(),
+  ],
 });

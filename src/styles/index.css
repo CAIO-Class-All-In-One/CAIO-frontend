@@ -1,25 +1,56 @@
-@import "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Roboto+Serif:ital,opsz,wght@0,8..144,200;0,8..144,400;0,8..144,600;1,8..144,200;1,8..144,400;1,8..144,600&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;300;400;600;700&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,600;1,8..144,700&display=swap";
 
 :root {
   --color-text-normal: #333;
-  --page-idnex-header-height: 10vh;
-  --page-index-main-height: 85vh;
-  --page-index-footer-height: calc(100vh - var(--page-idnex-header-height) - var(--page-index-main-height));
-  --el-box-shadow-lighter: 0 0 12px 0 rgba(0 0 0/ 12%);
+  --page-index-header-height: 10vh;
+  --page-main-height: calc(90vh - var(--page-footer-height));
+  --page-footer-height: 40px;
+  --box-shadow-tight: 0 1px 4px 0 hsl(0deg 0% 0% / 20%);
+  --box-shadow-thick: 0 0 12px 0 rgba(0 0 0/ 20%);
+  --box-shadow-light: 0 0 12px 0 rgba(0 0 0/ 12%);
   --el-color-primary: #c2185b;
   --el-color-primary-light-3: #ec407a;
   --el-color-primary-dark-2: #880e4f;
+  --el-font-family: "Roboto Serif", "Noto Sans SC", helvetica, "PingFang SC", "Microsoft YaHei", "微软雅黑", arial;
+  --font-family-sans: "Roboto Mono", "Noto Sans SC", "Segoe UI", "Helvetica Neue", "Console", sans-serif;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: "Roboto Serif", "Noto Sans SC", Helvetica, "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial,
-    sans-serif;
+  font-family: var(--el-font-family);
   font-size: 16px;
   color: var(--color-text-normal);
+}
+
+.el-main {
+  display: flex;
+  justify-content: center;
+  height: var(--page-main-height);
+}
+
+.el-footer {
+  --el-footer-height: var(--page-footer-height);
+}
+
+.el-container {
+  min-height: 100vh;
+}
+
+.el-button {
+  font-family: var(--el-font-family);
+}
+
+input {
+  font-family: var(--font-family-sans);
+}
+
+a {
+  color: var(--color-text-normal);
+  text-decoration: none;
 }

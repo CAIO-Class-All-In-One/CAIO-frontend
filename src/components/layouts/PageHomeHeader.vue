@@ -4,7 +4,7 @@ import { IconExternalLinkAlt } from "@iconify-prerendered/vue-uil";
 
 <template>
   <router-link id="logo" to="/">
-    <img src="/icon.png" alt="logo" crossorigin="anonymous" height="48" />
+    <img src="/logo.png" alt="logo" crossorigin="anonymous" height="48" />
     CAIO
   </router-link>
   <ul id="nav-container">
@@ -42,7 +42,7 @@ import { IconExternalLinkAlt } from "@iconify-prerendered/vue-uil";
     margin-right: 0.2em;
     border-radius: 12px;
     transition: all 0.3s;
-    box-shadow: var(--el-box-shadow-lighter);
+    box-shadow: var(--box-shadow-light);
     &:hover {
       box-shadow: 0 0 16px 0 rgba(0 0 0 / 24%);
     }

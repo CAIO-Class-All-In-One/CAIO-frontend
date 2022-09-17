@@ -1,9 +1,9 @@
-import App from "../page/PageApp.vue";
-import Home from "../page/PageHome.vue";
-import GuideApp from "../page/guide/PageGuideApp.vue";
-import GuidePlugin from "../page/guide/PageGuidePlugin.vue";
-import Login from "../page/auth/PageLogin.vue";
-import Register from "../page/auth/PageRegister.vue";
+import App from "../views/PageApp.vue";
+import Home from "../views/PageHome.vue";
+import GuideApp from "../views/guide/PageGuideApp.vue";
+import GuidePlugin from "../views/guide/PageGuidePlugin.vue";
+import Login from "../views/auth/PageLogin.vue";
+import Register from "../views/auth/PageRegister.vue";
 import * as VueRouter from "vue-router";
 
 const routes = [
@@ -11,8 +11,8 @@ const routes = [
   { path: "/app", component: App },
   { path: "/guide/app", component: GuideApp },
   { path: "/guide/plugin", component: GuidePlugin },
-  { path: "/login", component: Login },
-  { path: "/register", component: Register },
+  { path: "/account/login", component: Login },
+  { path: "/account/register", component: Register },
 ];
 
 const router = VueRouter.createRouter({

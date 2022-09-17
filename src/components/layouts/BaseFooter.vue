@@ -10,6 +10,5 @@ footer {
   align-items: center;
   justify-content: center;
   border-top: #f6f2ee solid 1px;
-  height: var(--page-index-footer-height);
 }
 </style>
