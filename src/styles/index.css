@@ -1,25 +1,23 @@
-@import "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Roboto+Serif:ital,opsz,wght@0,8..144,200;0,8..144,400;0,8..144,600;1,8..144,200;1,8..144,400;1,8..144,600&display=swap";
+@import "./ep.css";
 
 :root {
-  --color-text-normal: #333;
-  --page-idnex-header-height: 10vh;
-  --page-index-main-height: 85vh;
-  --page-index-footer-height: calc(100vh - var(--page-idnex-header-height) - var(--page-index-main-height));
-  --el-box-shadow-lighter: 0 0 12px 0 rgba(0 0 0/ 12%);
-  --el-color-primary: #c2185b;
-  --el-color-primary-light-3: #ec407a;
-  --el-color-primary-dark-2: #880e4f;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    --el-color-primary: #333;
 }
 
 body {
-  font-family: "Roboto Serif", "Noto Sans SC", Helvetica, "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial,
-    sans-serif;
-  font-size: 16px;
-  color: var(--color-text-normal);
+    composes: box form "./el.css";
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    margin: 0;
+}
+
+a {
+    color: var(--el-color-primary);
+}
+
+code {
+    border-radius: 2px;
+    padding: 2px 4px;
+    background-color: var(--el-color-primary-light-9);
+    color: var(--el-color-primary);
 }

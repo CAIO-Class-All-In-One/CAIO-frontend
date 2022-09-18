@@ -20,6 +20,9 @@
         "src/*"
       ]
     },
+    "types": [
+      "element-plus/global"
+    ],
     "skipLibCheck": true
   },
   "include": [

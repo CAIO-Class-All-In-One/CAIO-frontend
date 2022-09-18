@@ -10,15 +10,13 @@
   },
   "dependencies": {
     "element-plus": "^2.2.16",
-    "gsap": "^3.11.1",
     "pinia": "^2.0.22",
     "vue": "^3.2.39",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
-    "@iconify-prerendered/vue-uil": "^0.11.1656183367",
+    "@iconify-json/ep": "^1.1.7",
     "@types/node": "^18.7.17",
-    "@typescript-eslint/parser": "^5.37.0",
     "@vitejs/plugin-vue": "^3.1.0",
     "cssnano": "^5.1.13",
     "eslint": "^8.23.1",
@@ -34,7 +32,6 @@
     "unplugin-element-plus": "^0.4.1",
     "unplugin-vue-components": "^0.22.7",
     "vite": "^3.1.0",
-    "vitest": "^0.23.2",
     "vue-tsc": "^0.40.13"
   },
   "browserslist": "defaults",
