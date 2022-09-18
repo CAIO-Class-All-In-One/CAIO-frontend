@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { useTestLogin } from "~/composables";
+import router from "~/router";
+
+onMounted(async () => {
+  const isLogin: boolean = (await useTestLogin()).data.login;
+  if (isLogin) {
+    router.push("/app");
+  }
+});
+</script>
+
 <template>
   <el-container>
     <el-main>

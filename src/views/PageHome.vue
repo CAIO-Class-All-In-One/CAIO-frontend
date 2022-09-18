@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTestLogin } from "~/composables/index";
 
 const router = useRouter();
-
-onMounted(async () => {
-  const isLogin: boolean = (await useTestLogin()).data.login;
-  if (isLogin) {
-    router.push("/app");
-  }
-});
 
 const clickHandler = () => {
   const result = useTestLogin();
