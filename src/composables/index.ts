@@ -1,2 +1,2 @@
 export * from "./useRestfulJson";
-export * from "./login";
+export * from "./auth";
