@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import type { FormInstance } from "element-plus";
+import { ElNotification, FormInstance } from "element-plus";
 import { useRegister } from "~/composables";
+import router from "~/router";
 const formRef = ref<FormInstance>();
 const dynamicValidateForm = reactive({
   uid: "",
@@ -50,8 +51,20 @@ const submitForm = (formEl: FormInstance | undefined) => {
         dynamicValidateForm.email,
         dynamicValidateForm.unumber
       )
-        .then((v) => console.log(v))
-        .catch((v) => console.log(v));
+        .then((v) => {
+        ElNotification.success({
+          title:"注册成功",
+          message:JSON.stringify(v.data),
+        });
+        router.back();
+        router.push('/login')
+      })
+        .catch((v) => {
+          ElNotification.success({
+          title:"注册失败",
+          message:JSON.stringify(v.data),
+        });
+        });
     } else {
       return false;
     }

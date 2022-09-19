@@ -42,7 +42,9 @@ const useRegister = async (
 };
 
 const useLogout = async () => {
-  
+  return useRestfulJson(["#"],{
+    method: "POST"
+  })
 };
 
 export { useTestLogin, useLogin, useRegister, useLogout };
