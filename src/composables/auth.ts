@@ -1,6 +1,6 @@
 import { useRestfulJson, RestfulData } from "./useRestfulJson";
 
-export interface DataIsLogin extends RestfulData {
+export interface IDataIsLogin extends RestfulData {
   data: {
     login: boolean;
   };
@@ -10,7 +10,7 @@ export interface DataLogin extends RestfulData {
   data: any;
 }
 
-const useTestLogin = async (): Promise<DataIsLogin> => {
+const useTestLogin = async (): Promise<IDataIsLogin> => {
   return useRestfulJson(["auth", "login"]);
 };
 

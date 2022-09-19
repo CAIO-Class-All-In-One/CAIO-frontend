@@ -2,10 +2,11 @@
 import { reactive, ref } from "vue";
 import { IconUser, IconKeySkeletonAlt } from "@iconify-prerendered/vue-uil";
 import { useLogin } from "~/composables";
-import { FormInstance } from "element-plus";
+import { ElNotification, FormInstance } from "element-plus";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const formRef = ref<FormInstance>();
-
 const form = reactive({
   username: "",
   password: "",
@@ -16,8 +17,21 @@ const loginHandler = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       useLogin(form.username, form.password)
-        .then((v) => console.log(v))
-        .catch((v) => console.log(v));
+        .then((v) => {
+          ElNotification.success({
+            title: "登录成功",
+            message: String(v),
+            onClose() {
+              router.push("/app");
+            },
+          });
+        })
+        .catch((v) => {
+          ElNotification.error({
+            title: "登录失败",
+            message: String(v),
+          });
+        });
     } else {
       return false;
     }
