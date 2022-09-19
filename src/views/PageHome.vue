@@ -21,7 +21,7 @@ const clickHandler = () => {
 <template>
   <el-container>
     <el-header>
-      <page-home-header />
+      <base-header />
     </el-header>
     <el-main>
       <el-row justify="center">
@@ -55,7 +55,8 @@ header {
 
 main {
   flex-direction: column;
-  min-height: 670px;
+  min-height: 700px;
+  overflow: hidden;
   & h1 {
     background: linear-gradient(135deg, rgb(255, 248, 134) 0%, rgb(240, 114, 182) 100%);
     color: transparent;

@@ -21,4 +21,12 @@ const useLogin = async (username: string, password: string): Promise<DataLogin> 
   });
 };
 
-export { useTestLogin, useLogin };
+const useRegister = async () => {
+  // TODO
+};
+
+const useLogout = async () => {
+  // TODO
+};
+
+export { useTestLogin, useLogin, useRegister, useLogout };
