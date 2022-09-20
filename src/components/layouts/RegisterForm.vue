@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue";
 import { ElNotification, FormInstance } from "element-plus";
 import { useRegister } from "~/composables";
+import { IconUser, IconKeySkeletonAlt } from "@iconify-prerendered/vue-uil";
 import router from "~/router";
 const formRef = ref<FormInstance>();
 const dynamicValidateForm = reactive({
@@ -56,7 +57,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
           title:"注册成功",
           message:JSON.stringify(v.data),
         });
-        router.back();
         router.push('/login')
       })
         .catch((v) => {
@@ -108,7 +108,11 @@ const resetForm = (formEl: FormInstance | undefined) => {
           trigger: 'blur',
         }"
       >
-        <el-input v-model="dynamicValidateForm.password" />
+        <el-input v-model="dynamicValidateForm.password" 
+        type="password"
+        :prefix-icon="IconKeySkeletonAlt"
+        show-password
+        autocomplete="off"/>
       </el-form-item>
 
       <el-form-item

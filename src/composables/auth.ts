@@ -47,4 +47,12 @@ const useLogout = async () => {
   })
 };
 
-export { useTestLogin, useLogin, useRegister, useLogout };
+const usePluginData=()=>{
+  return ""
+}
+
+const useUserDataStore=()=>{
+  return ""
+}
+
+export { useTestLogin, useLogin, useRegister, useLogout,usePluginData,useUserDataStore };

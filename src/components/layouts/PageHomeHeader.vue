@@ -9,7 +9,7 @@ import { IconExternalLinkAlt } from "@iconify-prerendered/vue-uil";
   </router-link>
   <ul id="nav-container">
     <li>
-      <router-link to="/guide/app" class="nav-link"><span>使用教程</span></router-link>
+      <a href="/xxx/docs/" class="nav-link"><span>使用教程</span></a>
     </li>
     <li>
       <router-link to="/guide/plugin" class="nav-link"><span>插件开发指南</span></router-link>
