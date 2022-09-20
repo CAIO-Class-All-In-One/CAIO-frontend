@@ -13,6 +13,3 @@ pnpm-lock.yaml
 
 *.log
 
-node_modules
-.temp
-.cache
