@@ -8,6 +8,10 @@ import ForgetPassword from "../views/auth/PageForgetPassword.vue";
 import Plugin from "../views/app/PagePlugin.vue";
 import UserDetails from "../views/app/PageUserDetails.vue";
 import ClassSchedule from "../views/app/PageClassSchedule.vue";
+
+import ScheduleViewSwtich from "../components/class-schedule/ClassScheduleViewSwtich.vue";
+import BaseFooter from "../components/layouts/BaseFooter.vue";
+
 import * as VueRouter from "vue-router";
 
 const routes: VueRouter.RouteRecordRaw[] = [
@@ -16,9 +20,31 @@ const routes: VueRouter.RouteRecordRaw[] = [
     path: "/app",
     component: App,
     children: [
-      { path: "plugin", component: Plugin },
-      { path: "user-details", component: UserDetails },
-      { path: "class-schedule", component: ClassSchedule },
+      {
+        path: "plugin",
+        name: "plugin",
+        components: {
+          default: Plugin,
+          "app-footer": BaseFooter,
+        },
+      },
+      {
+        path: "user-details",
+        name: "user-details",
+        components: {
+          default: UserDetails,
+          "app-footer": BaseFooter,
+        },
+      },
+      {
+        path: "",
+        name: "class-schedule",
+        components: {
+          default: ClassSchedule,
+          "app-footer": ScheduleViewSwtich,
+        },
+        alias: "class-schedule",
+      },
     ],
   },
   { path: "/guide/app", component: GuideApp },

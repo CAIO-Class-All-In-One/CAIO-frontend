@@ -1,10 +1,25 @@
 <script setup lang="ts">
 import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerendered/vue-uil";
 import { onMounted, Ref, ref } from "vue";
-import { useLogout } from "~/composables";
+import { useRouter } from "vue-router";
+import { useLogout, useUserDataStore, useTestLogin } from "~/composables";
 const isCollapse: Ref<boolean> = ref(false);
 
-onMounted(() => {});
+const userdata = useUserDataStore();
+const router = useRouter();
+
+onMounted(async () => {
+  const { data } = await useTestLogin();
+  if (data.success) {
+    userdata.$patch({
+      username: data.username,
+      school: data.school,
+    });
+    console.log(`[AppMain]: 进入主页面 用户id: ${userdata.username} 学校: ${userdata.school}`);
+  } else {
+    router.replace("/account/login");
+  }
+});
 </script>
 
 <template>
@@ -31,7 +46,9 @@ onMounted(() => {});
         <router-view></router-view>
       </el-col>
     </el-main>
-    <el-footer><class-schedule-view-swtich /> </el-footer>
+    <el-footer>
+      <router-view name="app-footer"></router-view>
+    </el-footer>
   </el-container>
 </template>
 

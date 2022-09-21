@@ -13,7 +13,6 @@ const form = reactive({
 });
 
 const router = useRouter();
-const emit = defineEmits(["loginSuccess"]);
 
 const loginHandler = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -26,7 +25,6 @@ const loginHandler = (formEl: FormInstance | undefined) => {
               title: "登录成功",
               message: JSON.stringify(v.data),
             });
-            emit("loginSuccess", v.data);
             router.push("/app");
           } else {
             throw new Error(v.msg);

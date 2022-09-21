@@ -5,7 +5,6 @@ import { useRegister } from "~/composables";
 import router from "~/router";
 
 const formRef = ref<FormInstance>();
-const emit = defineEmits(["submitRegister"]);
 
 const dynamicValidateForm = reactive({
   uid: "",

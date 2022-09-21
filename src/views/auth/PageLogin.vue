@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { IDataLogin, useUserDataStore } from "~/composables";
+import { useUserDataStore } from "~/composables";
 import router from "~/router";
 
 const userdata = useUserDataStore();
@@ -11,14 +11,12 @@ onMounted(async () => {
     router.push("/app");
   }
 });
-
-const loginSuccessHandler = async (data: IDataLogin) => {};
 </script>
 
 <template>
   <el-container>
     <el-main>
-      <el-col id="login-container" :span="8" @login-success="loginSuccessHandler">
+      <el-col id="login-container" :span="8" >
         <img src="/logo.png" alt="logo" width="192" height="192" />
         <login-form id="login-form" />
       </el-col>

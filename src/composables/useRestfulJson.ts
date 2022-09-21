@@ -4,6 +4,10 @@ export interface RestfulData<T> {
   data: T;
 }
 
+export interface IOpterationIsSucceed {
+  success: boolean;
+}
+
 const useRestfulJson = async <DATA>(
   paths: string[],
   options?: Parameters<typeof fetch>[1]

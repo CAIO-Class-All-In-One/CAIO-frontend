@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { useTestLogin } from "./auth";
 
 export const useUserDataStore = defineStore("user-data", {
-  state: () => ({ uid: "", school: "" }),
+  state: () => ({ username: "", school: "" }),
   getters: {
-    isLogin: async () => (await useTestLogin()).data.login,
+    isLogin: async () => (await useTestLogin()).data.success,
   },
 });
