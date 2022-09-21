@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useTestLogin } from "~/composables";
+import { IDataLogin, useUserDataStore } from "~/composables";
 import router from "~/router";
 
+const userdata = useUserDataStore();
+
 onMounted(async () => {
-  const isLogin: boolean = (await useTestLogin()).data.login;
-  if (isLogin) {
+  const login = await userdata.isLogin;
+  if (login) {
     router.push("/app");
   }
 });
+
+const loginSuccessHandler = async (data: IDataLogin) => {};
 </script>
 
 <template>
   <el-container>
     <el-main>
-      <el-col id="login-container" :span="8">
+      <el-col id="login-container" :span="8" @login-success="loginSuccessHandler">
         <img src="/logo.png" alt="logo" width="192" height="192" />
         <login-form id="login-form" />
       </el-col>

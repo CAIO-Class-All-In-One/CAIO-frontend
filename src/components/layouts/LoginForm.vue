@@ -5,12 +5,15 @@ import { useLogin } from "~/composables";
 import { ElNotification, FormInstance } from "element-plus";
 import { useRouter } from "vue-router";
 
-const router = useRouter();
 const formRef = ref<FormInstance>();
+
 const form = reactive({
   username: "",
   password: "",
 });
+
+const router = useRouter();
+const emit = defineEmits(["loginSuccess"]);
 
 const loginHandler = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -18,18 +21,21 @@ const loginHandler = (formEl: FormInstance | undefined) => {
     if (valid) {
       useLogin(form.username, form.password)
         .then((v) => {
-          ElNotification.success({
-            title: "登录成功",
-            message: String(v),
-            onClose() {
-              router.push("/app");
-            },
-          });
+          if (String(v.code).startsWith("2")) {
+            ElNotification.success({
+              title: "登录成功",
+              message: JSON.stringify(v.data),
+            });
+            emit("loginSuccess", v.data);
+            router.push("/app");
+          } else {
+            throw new Error(v.msg);
+          }
         })
         .catch((v) => {
           ElNotification.error({
             title: "登录失败",
-            message: String(v),
+            message: JSON.stringify(v),
           });
         });
     } else {
@@ -64,7 +70,15 @@ const loginHandler = (formEl: FormInstance | undefined) => {
       <router-link v-slot="{ href }" to="/account/register" custom>
         <el-link class="item" style="font-size: 0.75em" :href="href">新用户注册</el-link>
       </router-link>
-      <el-button class="item" @click="loginHandler(formRef)">登录</el-button>
+      <el-button
+        class="item"
+        @click="
+          () => {
+            loginHandler(formRef);
+          }
+        "
+        >登录</el-button
+      >
       <router-link v-slot="{ href }" to="/account/forget-password" custom>
         <el-link class="item" style="font-size: 0.75em" :href="href">忘记密码</el-link>
       </router-link>

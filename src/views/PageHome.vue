@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { useTestLogin } from "~/composables/index";
+import { useUserDataStore } from "~/composables";
 
 const router = useRouter();
+const userdata = useUserDataStore();
 
-const clickHandler = () => {
-  const result = useTestLogin();
-  result
-    .then((v) => v.data.login)
-    .then((login) => {
-      if (login) {
-        router.push("/app");
-      } else {
-        router.push("/account/login");
-      }
-    });
+const clickHandler = async () => {
+  const login = await userdata.isLogin;
+  if (login) {
+    router.push("/app");
+  } else {
+    router.push("/account/login");
+  }
 };
 </script>
 
