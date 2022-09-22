@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerendered/vue-uil";
 import { storeToRefs } from "pinia";
-import { onMounted, Ref, ref } from "vue";
+import { onBeforeMount, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useLogout, useUserData, useTestLogin } from "~/composables";
 import { useCourseData } from "~/composables/store";
@@ -10,7 +10,7 @@ const isCollapse: Ref<boolean> = ref(false);
 const userdata = useUserData();
 const router = useRouter();
 
-onMounted(async () => {
+onBeforeMount(async () => {
   userdata.isLoading = true;
   const { data } = await useTestLogin();
   if (data.success) {
@@ -46,7 +46,7 @@ const { week } = storeToRefs(courseData);
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="20">
+      <el-col v-loading="userdata.isLoading" :span="20">
         <router-view></router-view>
       </el-col>
     </el-main>

@@ -13,6 +13,7 @@ export interface ItemObj {
 
 export interface ICourseObj extends ItemObj {
   cid: number;
+  cnumber: number;
   classroom: string;
   teacher: string;
   credit: string;

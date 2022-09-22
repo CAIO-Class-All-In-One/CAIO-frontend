@@ -27,8 +27,7 @@ const handleCourseInfo = async (username: string) => {
     const { data, msg, code } = await getCourses(username);
     if (String(code).startsWith("2")) {
       data.forEach((v) => {
-        courses[v.cid] = v;
-        console.log(v);
+        courses[v.cnumber] = v;
       });
       ElNotification.success({ title: "获取课程信息", message: msg });
     } else {
@@ -40,4 +39,4 @@ const handleCourseInfo = async (username: string) => {
 };
 </script>
 
-<template><ClassSchedulePanel :week="week" :data="courseData" /></template>
+<template><ClassSchedulePanel :week="week" :data="courses" /></template>

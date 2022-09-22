@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     ClassSchedulePanel: typeof import('./components/class-schedule/ClassSchedulePanel.vue')['default']
     ClassScheduleViewSwtich: typeof import('./components/class-schedule/ClassScheduleViewSwtich.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCa: typeof import('element-plus/es')['ElCa']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -50,5 +51,8 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserDetail: typeof import('./components/layouts/UserDetail.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
