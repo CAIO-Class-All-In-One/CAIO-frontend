@@ -101,12 +101,14 @@ const server = new Pretender(function () {
           classroom: "I-404",
           teacher: "zy",
           credit: "5.5",
-          time: {
-            weekday: 2,
-            start: 5,
-            span: 3,
-            weeks: [1, 3, 4, 9],
-          },
+          time: [
+            {
+              weekday: 2,
+              start: 5,
+              span: 3,
+              weeks: [1, 3, 4, 9],
+            },
+          ],
           extra: null,
         },
       ],

@@ -3,14 +3,15 @@ import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerende
 import { storeToRefs } from "pinia";
 import { onMounted, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useLogout, useUserDataStore, useTestLogin } from "~/composables";
+import { useLogout, useUserData, useTestLogin } from "~/composables";
 import { useCourseData } from "~/composables/store";
 const isCollapse: Ref<boolean> = ref(false);
 
-const userdata = useUserDataStore();
+const userdata = useUserData();
 const router = useRouter();
 
 onMounted(async () => {
+  userdata.isLoading = true;
   const { data } = await useTestLogin();
   if (data.success) {
     const { school, unumber, username } = data;
@@ -19,6 +20,7 @@ onMounted(async () => {
   } else {
     router.replace("/account/login");
   }
+  userdata.isLoading = false;
 });
 const courseData = useCourseData();
 const { week } = storeToRefs(courseData);

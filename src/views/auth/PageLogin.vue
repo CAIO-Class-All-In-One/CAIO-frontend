@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useUserDataStore } from "~/composables";
+import { useUserData } from "~/composables";
 import router from "~/router";
 
-const userdata = useUserDataStore();
+const userdata = useUserData();
 
 onMounted(async () => {
   const login = await userdata.isLogin;
@@ -16,7 +16,7 @@ onMounted(async () => {
 <template>
   <el-container>
     <el-main>
-      <el-col id="login-container" :span="8" >
+      <el-col id="login-container" :span="8">
         <img src="/logo.png" alt="logo" width="192" height="192" />
         <login-form id="login-form" />
       </el-col>

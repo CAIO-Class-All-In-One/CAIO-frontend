@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import { ElNotification } from "element-plus";
-import { onMounted, ref } from "vue";
-import { useUserDataStore, getUserData, IDataUser, updateUserData } from "~/composables";
+import { onMounted, ref, watch } from "vue";
+import { useUserData, getUserData, IDataUser, updateUserData } from "~/composables";
 
 const dialogFormVisible = ref(false);
 
-const userdata = useUserDataStore();
+const userdata = useUserData();
 const userinfo = ref<IDataUser>({ email: "", school: "", unumber: "", username: "" });
 const form = userinfo;
 
-userdata.$subscribe((mutation, state) => {
-  handleUserInfo(state.username);
+watch(userdata, async (state) => {
+  if (!state.isLoading) {
+    handleUserInfos(state.username);
+  }
 });
 
-onMounted(async () => {
-  handleUserInfo(userdata.username);
+onMounted(() => {
+  if (!userdata.isLoading) {
+    handleUserInfos(userdata.username);
+  }
 });
 
-const handleUserInfo = async (username: string) => {
+const handleUserInfos = async (username: string) => {
   if (!username) return;
   try {
     userinfo.value = (await getUserData(username)).data;
@@ -28,6 +32,7 @@ const handleUserInfo = async (username: string) => {
 
 const handleUpdateUserInfo = async () => {
   try {
+    userdata.isLoading = true;
     const result = await updateUserData(userdata.username, userinfo.value);
     if (result.data.success) {
       const { username, school } = result.data;
@@ -42,6 +47,7 @@ const handleUpdateUserInfo = async () => {
   } catch (error) {
     ElNotification.error({ title: "出错了", message: "更新用户信息失败" });
   }
+  userdata.isLoading = false;
 };
 </script>
 

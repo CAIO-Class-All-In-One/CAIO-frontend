@@ -2,12 +2,12 @@ import { useApi } from "./useRestfulJson";
 
 export interface ItemObj {
   name: string;
-  time: {
+  time: Array<{
     weekday: number;
     start: number;
     span: number;
     weeks: Array<number>;
-  };
+  }>;
   extra: any;
 }
 

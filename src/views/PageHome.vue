@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { useUserDataStore } from "~/composables";
+import { useUserData } from "~/composables";
 
 const router = useRouter();
-const userdata = useUserDataStore();
+const userdata = useUserData();
 
 const clickHandler = async () => {
   const login = await userdata.isLogin;

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance } from "element-plus";
 import { onMounted, reactive, ref, watch } from "vue";
-import { usePluginData, useUserDataStore, usePluginApply } from "~/composables";
+import { usePluginData, useUserData, usePluginApply } from "~/composables";
 import { IPluginData } from "~/composables/plugin";
 
-const userdata = useUserDataStore();
+const userdata = useUserData();
 const pluginReqDialogVisable = ref(false);
 const formEl = ref<FormInstance>();
 const plguinReqForm = reactive({
@@ -37,10 +37,16 @@ const applyPlugin = async (repo: string, params: any) => {
   }
 };
 
-userdata.$subscribe(handlePluginInfos);
+watch(userdata, async (state) => {
+  if (!state.isLoading) {
+    handlePluginInfos();
+  }
+});
 
 onMounted(() => {
-  handlePluginInfos();
+  if (!userdata.isLoading) {
+    handlePluginInfos();
+  }
 });
 
 watch(pluginReqDialogVisable, (e) => {
