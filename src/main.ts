@@ -88,4 +88,28 @@ const server = new Pretender(function () {
       ];
     }
   });
+  this.get("api/course/:unumber", (request) => [
+    200,
+    {},
+    JSON.stringify({
+      msg: "yes",
+      code: 2,
+      data: [
+        {
+          name: "一节课",
+          cid: 233332,
+          classroom: "I-404",
+          teacher: "zy",
+          credit: "5.5",
+          time: {
+            weekday: 2,
+            start: 5,
+            span: 3,
+            weeks: [1, 3, 4, 9],
+          },
+          extra: null,
+        },
+      ],
+    }),
+  ]);
 });

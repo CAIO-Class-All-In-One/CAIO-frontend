@@ -1,5 +1,23 @@
-export interface IClassObj {}
+import { useApi } from "./useRestfulJson";
 
-const getCourses = async () => {
-    
+export interface ItemObj {
+  name: string;
+  time: {
+    weekday: number;
+    start: number;
+    span: number;
+    weeks: Array<number>;
+  };
+  extra: any;
+}
+
+export interface ICourseObj extends ItemObj {
+  cid: number;
+  classroom: string;
+  teacher: string;
+  credit: string;
+}
+
+export const getCourses = async (unumber: string) => {
+  return useApi<Array<ICourseObj>>(["course", unumber]);
 };

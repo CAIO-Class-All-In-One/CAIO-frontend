@@ -20,8 +20,8 @@ export const usePluginData = async (query: string, type: "uid" | "repo" | "schoo
   return useApi<Array<IPluginData>>(["plugin", `${encodeURIComponent(query)}?${new URLSearchParams({ type })}`]);
 };
 
-export const usePluginApply = async (reop: string, info: { [K: string]: string }) => {
-  return useApi<IPluginExecute>(["plugin", encodeURIComponent(reop), `?execute=apply`], {
+export const usePluginApply = async (repo: string, info: { [K: string]: string }) => {
+  return useApi<IPluginExecute>(["plugin", encodeURIComponent(repo), `?execute=apply`], {
     method: "POST",
     body: new URLSearchParams(info).toString(),
   });

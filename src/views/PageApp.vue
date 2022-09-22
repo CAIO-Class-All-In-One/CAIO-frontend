@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerendered/vue-uil";
+import { storeToRefs } from "pinia";
 import { onMounted, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useLogout, useUserDataStore, useTestLogin } from "~/composables";
+import { useCourseData } from "~/composables/store";
 const isCollapse: Ref<boolean> = ref(false);
 
 const userdata = useUserDataStore();
@@ -11,15 +13,15 @@ const router = useRouter();
 onMounted(async () => {
   const { data } = await useTestLogin();
   if (data.success) {
-    userdata.$patch({
-      username: data.username,
-      school: data.school,
-    });
+    const { school, unumber, username } = data;
+    userdata.$patch({ school, unumber, username });
     console.log(`[AppMain]: 进入主页面 用户id: ${userdata.username} 学校: ${userdata.school}`);
   } else {
     router.replace("/account/login");
   }
 });
+const courseData = useCourseData();
+const { week } = storeToRefs(courseData);
 </script>
 
 <template>
@@ -47,7 +49,14 @@ onMounted(async () => {
       </el-col>
     </el-main>
     <el-footer>
-      <router-view name="app-footer"></router-view>
+      <router-view
+        name="app-footer"
+        @week-change="
+          (val:number) => {
+            week = val;
+          }
+        "
+      ></router-view>
     </el-footer>
   </el-container>
 </template>

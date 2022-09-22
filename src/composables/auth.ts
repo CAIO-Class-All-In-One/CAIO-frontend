@@ -3,6 +3,7 @@ import { IOpterationIsSucceed, useApi } from "./useRestfulJson";
 export interface ILoginSucceed {
   username: string;
   school: string;
+  unumber: string;
 }
 
 const useTestLogin = async () => {

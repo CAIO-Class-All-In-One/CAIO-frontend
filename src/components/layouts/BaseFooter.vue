@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { IconCube } from "@iconify-prerendered/vue-uil";
+defineEmits(["weekChange"]);
 </script>
 
 <template>©2022<el-divider direction="vertical" /> CAIO <IconCube /> 项目开发组</template>
