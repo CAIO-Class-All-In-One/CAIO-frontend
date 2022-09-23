@@ -3,7 +3,7 @@ import { IconExternalLinkAlt } from "@iconify-prerendered/vue-uil";
 </script>
 
 <template>
-  <router-link id="logo" to="/">
+  <router-link class="logo-container" to="/">
     <img src="/logo.png" alt="logo" crossorigin="anonymous" height="48" />
     CAIO
   </router-link>
@@ -28,7 +28,7 @@ import { IconExternalLinkAlt } from "@iconify-prerendered/vue-uil";
 </template>
 
 <style scoped lang="postcss">
-#logo {
+.logo-container {
   position: absolute;
   display: flex;
   align-items: center;

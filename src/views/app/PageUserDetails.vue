@@ -34,7 +34,7 @@ const handleUpdateUserInfo = async () => {
   try {
     userdata.isLoading = true;
     const result = await updateUserData(userdata.username, userinfo.value);
-    if (result.data.success) {
+    if (result.code.toString().startsWith("2") && result.data.success) {
       const { username, school } = result.data;
       userdata.$patch({
         username,
@@ -46,8 +46,9 @@ const handleUpdateUserInfo = async () => {
     }
   } catch (error) {
     ElNotification.error({ title: "出错了", message: "更新用户信息失败" });
+  } finally {
+    userdata.isLoading = false;
   }
-  userdata.isLoading = false;
 };
 </script>
 
@@ -61,10 +62,18 @@ const handleUpdateUserInfo = async () => {
         </div>
       </template>
       <el-descriptions border :column="1" size="large">
-        <el-descriptions-item label="用户名: ">{{ userinfo.username }}</el-descriptions-item>
-        <el-descriptions-item label="学校: ">{{ userinfo.school }}</el-descriptions-item>
-        <el-descriptions-item label="学号: ">{{ userinfo.unumber }}</el-descriptions-item>
-        <el-descriptions-item label="邮箱: ">{{ userinfo.email }}</el-descriptions-item>
+        <el-descriptions-item label="用户名: " label-class-name="label-col" label-align="center">{{
+          userinfo.username
+        }}</el-descriptions-item>
+        <el-descriptions-item label="学校: " label-class-name="label-col" label-align="center">{{
+          userinfo.school
+        }}</el-descriptions-item>
+        <el-descriptions-item label="学号: " label-class-name="label-col" label-align="center">{{
+          userinfo.unumber
+        }}</el-descriptions-item>
+        <el-descriptions-item label="邮箱: " label-class-name="label-col" label-align="center">{{
+          userinfo.email
+        }}</el-descriptions-item>
       </el-descriptions>
       <div style="margin: 1.5em auto; float: right">
         <el-button type="primary" @click="dialogFormVisible = true">修改信息</el-button>
@@ -94,7 +103,7 @@ const handleUpdateUserInfo = async () => {
   </el-dialog>
 </template>
 
-<style scoped lang="postcss">
+<style lang="postcss">
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -104,21 +113,8 @@ const handleUpdateUserInfo = async () => {
 .box-card {
   width: 800px;
 }
-:deep(.el-descriptions__label) {
-  margin-right: 40px;
-  font-size: 14px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #909399;
-}
-:deep(.el-descriptions__cell) {
-  padding-bottom: 35px;
-  text-align: left;
-}
-:deep(.el-descriptions__content) {
-  font-size: 14px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #303133;
+
+.label-col {
+  width: 33%;
 }
 </style>

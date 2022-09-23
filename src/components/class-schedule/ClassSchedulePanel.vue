@@ -84,15 +84,15 @@ const popperOptions = {
 };
 
 const handleCellClick = () => {
-  console.log(":hhhh");
+  // TODO
 };
 
 const handleCellHoverOn = () => {
-  console.log(":hhhh1");
+  // TODO
 };
 
 const handleCellHoverOff = () => {
-  console.log(":hhhh2");
+  // TODO
 };
 
 onMounted(() => {});

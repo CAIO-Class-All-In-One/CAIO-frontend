@@ -31,7 +31,9 @@ const { week } = storeToRefs(courseData);
     <el-main id="app-main">
       <el-col :span="4">
         <el-menu id="app-menu" :collapse="isCollapse">
-          <img src="/logo.png" alt="logo" width="64" height="64" />
+          <router-link class="logo-container" to="/">
+            <img src="/logo.png" alt="logo" crossorigin="anonymous" height="48" />
+          </router-link>
           <el-menu-item index="1">
             <router-link to="/app/class-schedule" class="nav-link"><IconDatabaseAlt /> 课表 </router-link>
           </el-menu-item>
@@ -75,5 +77,19 @@ const { week } = storeToRefs(courseData);
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  margin: 2em;
+  & > img {
+    margin: auto;
+    border-radius: 12px;
+    transition: all 0.3s;
+    box-shadow: var(--box-shadow-light);
+    &:hover {
+      box-shadow: 0 0 16px 0 rgba(0 0 0 / 24%);
+    }
+  }
 }
 </style>

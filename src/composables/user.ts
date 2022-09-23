@@ -14,7 +14,10 @@ const getUserData = async (username: string) => {
 const updateUserData = async (username: string, newData: IDataUser) => {
   return useApi<IDataUser & IOpterationIsSucceed>(["user", username], {
     method: "POST",
-    body: new URLSearchParams(newData as Record<keyof IDataUser, string>),
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(newData as Record<keyof IDataUser, string>),
   });
 };
 

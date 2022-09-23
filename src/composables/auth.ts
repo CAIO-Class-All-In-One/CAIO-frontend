@@ -20,7 +20,10 @@ const useLogin = async (username: string, password: string) => {
 const useRegister = async (username: string, password: string, school: string, email: string, unumber: string) => {
   return useApi<IOpterationIsSucceed>(["auth", "register"], {
     method: "POST",
-    body: new URLSearchParams({ username, password, school, email, unumber }),
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ username, password, school, email, unumber }),
   });
 };
 

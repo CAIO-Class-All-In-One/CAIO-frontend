@@ -21,8 +21,9 @@ export const usePluginData = async (query: string, type: "uid" | "repo" | "schoo
 };
 
 export const usePluginApply = async (repo: string, info: { [K: string]: string }) => {
+  // console.log(info);
   return useApi<IPluginExecute>(["plugin", encodeURIComponent(repo), `?execute=apply`], {
     method: "POST",
-    body: new URLSearchParams(info).toString(),
+    body: JSON.stringify(info),
   });
 };
