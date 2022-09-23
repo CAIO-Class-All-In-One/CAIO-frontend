@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useUserData } from "~/composables";
+import { useGlobalStore } from "~/composables";
 import router from "~/router";
 
-const userdata = useUserData();
+const userdata = useGlobalStore();
 
 onMounted(async () => {
   const login = await userdata.isLogin;

@@ -3,11 +3,11 @@ import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerende
 import { storeToRefs } from "pinia";
 import { onBeforeMount, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useLogout, useUserData, useTestLogin } from "~/composables";
+import { useLogout, useGlobalStore, useTestLogin } from "~/composables";
 import { useCourseData } from "~/composables/store";
 const isCollapse: Ref<boolean> = ref(false);
 
-const userdata = useUserData();
+const userdata = useGlobalStore();
 const router = useRouter();
 
 onBeforeMount(async () => {

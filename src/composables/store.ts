@@ -1,8 +1,14 @@
 import { defineStore } from "pinia";
 import { useTestLogin } from "./auth";
 
-export const useUserData = defineStore("user-data", {
-  state: () => ({ username: "", school: "", unumber: "", isLoading: false }),
+export const useGlobalStore = defineStore("store-global", {
+  state: () => ({
+    username: "",
+    school: "",
+    unumber: "",
+    weekStart: 1,
+    isLoading: false,
+  }),
   getters: {
     isLogin: async () => (await useTestLogin()).data.success,
   },

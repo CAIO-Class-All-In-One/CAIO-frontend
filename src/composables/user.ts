@@ -5,6 +5,7 @@ export interface IDataUser {
   school: string;
   email: string;
   unumber: string;
+  weekStart: number; //开始周
 }
 
 const getUserData = async (username: string) => {
@@ -17,7 +18,7 @@ const updateUserData = async (username: string, newData: IDataUser) => {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(newData as Record<keyof IDataUser, string>),
+    body: JSON.stringify(newData),
   });
 };
 

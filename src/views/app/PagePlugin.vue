@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance } from "element-plus";
 import { onMounted, reactive, ref, watch } from "vue";
-import { usePluginData, useUserData, usePluginApply } from "~/composables";
+import { usePluginData, useGlobalStore, usePluginApply } from "~/composables";
 import { IPluginData } from "~/composables/plugin";
 
-const userdata = useUserData();
+const userdata = useGlobalStore();
 const pluginReqDialogVisable = ref(false);
 const formEl = ref<FormInstance>();
 const plguinReqForm = reactive({

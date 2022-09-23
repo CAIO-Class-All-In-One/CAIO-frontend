@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElNotification, TableV2Instance } from "element-plus";
+import { TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { computed, ref } from "vue";
 import { ICourseObj } from "~/composables";
@@ -50,18 +50,19 @@ const displayData = computed(() => {
       display[i][j] = undefined;
     }
   }
+
   data.forEach((courseData) => {
     courseData.time.forEach((courseTime) => {
       if (courseTime.weeks.includes(props.week)) {
         const { start: x, weekday: y } = courseTime;
-        try {
-          display[x][y] = courseData;
-        } catch (e) {
-          ElNotification.error({ title: "课程信息错误", message: `课程 ${courseData.name} 开始小节为 ${x} 无法显示!` });
+        if (x >= 14 || y >= 6) {
+          return;
         }
+        display[x][y] = courseData;
       }
     });
   });
+
   return display;
 });
 
@@ -109,6 +110,10 @@ const rowSpan = (course: ICourseObj, columnIndex: number, rowIndex: number) => {
     return course?.time.find((v) => columnIndex === v.weekday && rowIndex + 1 === v.start)?.span;
   }
 };
+
+const randomHelper = (start: number, end: number) => {
+  return Math.random() * (end - start) + start;
+};
 </script>
 
 <template>
@@ -154,7 +159,11 @@ const rowSpan = (course: ICourseObj, columnIndex: number, rowIndex: number) => {
                 <el-card
                   shadow="hover"
                   class="card"
-                  :style="{ height: `${(rowHeight - 1) * rowSpan(scope.row[item], item, scope.$index)! + 1}px` }"
+                  :style="{ 
+                    height: `${(rowHeight - 1) * rowSpan(scope.row[item], item, scope.$index)! + 1}px`,
+                    backgroundColor: `rgba(${ randomHelper(232, 255) },${ randomHelper(232, 255) },${ randomHelper(232, 255) }, 1)`,
+                    boxShadow: `var(--el-shadow-light)`
+                }"
                 >
                   <p>{{ (scope.row[item] as ICourseObj).name }}</p>
                   <p>{{ (scope.row[item] as ICourseObj).classroom }}</p>

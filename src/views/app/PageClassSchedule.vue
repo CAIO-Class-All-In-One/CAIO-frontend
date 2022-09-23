@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ElNotification } from "element-plus";
 import { onMounted, reactive, watch } from "vue";
-import { getCourses, ICourseObj, useUserData, useCourseData } from "~/composables";
+import { getCourses, ICourseObj, useGlobalStore, useCourseData } from "~/composables";
 import { storeToRefs } from "pinia";
 
 const courseData = useCourseData();
 const { week } = storeToRefs(courseData);
 
 const courses = reactive<Record<number, ICourseObj>>({});
-const userdata = useUserData();
+const userdata = useGlobalStore();
 
 watch(userdata, async (state) => {
   if (!state.isLoading) {
@@ -29,7 +29,8 @@ const handleCourseInfo = async (unumber: string) => {
       data.forEach((v) => {
         courses[v.cnumber] = v;
       });
-      ElNotification.success({ title: "获取课程信息", message: msg });
+      console.log(`[App-ClassSchedule]: ${msg}`);
+      // ElNotification.success({ title: "获取课程信息", message: msg });
     } else {
       throw new Error("获取课程信息错误");
     }
