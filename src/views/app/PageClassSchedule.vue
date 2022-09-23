@@ -12,19 +12,19 @@ const userdata = useUserData();
 
 watch(userdata, async (state) => {
   if (!state.isLoading) {
-    handleCourseInfo(state.username);
+    handleCourseInfo(state.unumber);
   }
 });
 
 onMounted(() => {
   if (!userdata.isLoading) {
-    handleCourseInfo(userdata.username);
+    handleCourseInfo(userdata.unumber);
   }
 });
 
-const handleCourseInfo = async (username: string) => {
+const handleCourseInfo = async (unumber: string) => {
   try {
-    const { data, msg, code } = await getCourses(username);
+    const { data, msg, code } = await getCourses(unumber);
     if (String(code).startsWith("2")) {
       data.forEach((v) => {
         courses[v.cnumber] = v;

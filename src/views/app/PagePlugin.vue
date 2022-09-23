@@ -31,9 +31,10 @@ const applyPlugin = async (repo: string, params: any) => {
     curRepo.value = "";
     verifycodeSrc.value = "";
   } else {
-    verifycodeSrc.value = info.verifycode ?? "";
+    verifycodeSrc.value = info.verifyCode ?? "";
     curRepo.value = repo;
     pluginReqDialogVisable.value = true;
+    plguinReqForm.username = userdata.unumber;
   }
 };
 

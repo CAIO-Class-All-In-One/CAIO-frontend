@@ -23,7 +23,7 @@ const useRegister = async (username: string, password: string, school: string, e
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify({ username, password, school, email, unumber }),
+    body: JSON.stringify({ username, password, school, email, unumber: unumber === "" ? null : unumber }),
   });
 };
 

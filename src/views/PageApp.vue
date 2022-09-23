@@ -28,14 +28,14 @@ const { week } = storeToRefs(courseData);
 
 <template>
   <el-container>
-    <el-main id="app-main">
+    <el-main id="app-main" style="position: relative">
       <el-col :span="4">
         <el-menu id="app-menu" :collapse="isCollapse">
           <router-link class="logo-container" to="/">
             <img src="/logo.png" alt="logo" crossorigin="anonymous" height="48" />
           </router-link>
           <el-menu-item index="1">
-            <router-link to="/app/class-schedule" class="nav-link"><IconDatabaseAlt /> 课表 </router-link>
+            <router-link to="/app/class-schedule" class="nav-link"><IconDatabaseAlt />课表 </router-link>
           </el-menu-item>
           <el-menu-item index="2">
             <router-link to="/app/user-details" class="nav-link"><IconUser />用户 </router-link>
@@ -69,19 +69,28 @@ const { week } = storeToRefs(courseData);
 #app-main {
   padding: 0;
 }
+
 #app-menu {
   height: 100%;
+  z-index: 100;
+  box-shadow: var(--box-shadow-thick);
 }
+
 .nav-link {
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  & > * {
+    margin-inline-start: -8%;
+    margin-inline-end: 8%;
+  }
 }
 
 .logo-container {
   display: flex;
-  margin: 2em;
+  padding: 2em;
   & > img {
     margin: auto;
     border-radius: 12px;

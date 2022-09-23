@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { ElNotification, TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { ICourseObj } from "~/composables";
 
 const props = defineProps<{
@@ -12,12 +13,8 @@ interface ScheduleRowObj {
   [weekday: number]: ICourseObj | undefined;
 }
 
-interface SpanMethodProps {
-  row: ScheduleRowObj;
-  column: TableColumnCtx<ScheduleRowObj>;
-  rowIndex: number;
-  columnIndex: number;
-}
+const rowHeight = ref(0);
+const tableEl = ref<TableV2Instance>();
 
 const section = ((
   last: number,
@@ -29,7 +26,7 @@ const section = ((
   sections.forEach((v) => {
     const startStr = (v.shift() as string).split(":").map((v) => parseInt(v));
     let start = new Date(0, 0, 0, ...startStr);
-    (v as number[]).forEach((v, i) => {
+    (v as number[]).forEach((v) => {
       for (let j = 0; j < v; j++) {
         const _start = new Date(start.getTime());
         start.setMinutes(start.getMinutes() + last);
@@ -57,19 +54,16 @@ const displayData = computed(() => {
     courseData.time.forEach((courseTime) => {
       if (courseTime.weeks.includes(props.week)) {
         const { start: x, weekday: y } = courseTime;
-        display[x][y] = courseData;
+        try {
+          display[x][y] = courseData;
+        } catch (e) {
+          ElNotification.error({ title: "课程信息错误", message: `课程 ${courseData.name} 开始小节为 ${x} 无法显示!` });
+        }
       }
     });
   });
   return display;
 });
-
-const handleRowSpan = ({ row, column, rowIndex, columnIndex }: SpanMethodProps) => {
-  if (row[columnIndex] != undefined) {
-    return [row[columnIndex]?.time.find((v) => columnIndex === v.weekday)?.span!, 1];
-  }
-  return [1, 1];
-};
 
 const popperOptions = {
   modifiers: [
@@ -89,22 +83,42 @@ const handleCellClick = () => {
 
 const handleCellHoverOn = () => {
   // TODO
+  return false;
 };
 
 const handleCellHoverOff = () => {
   // TODO
+  return false;
 };
 
-onMounted(() => {});
+const cellStyleGuard = ({
+  rowIndex,
+}: {
+  row: ScheduleRowObj;
+  column: TableColumnCtx<ScheduleRowObj>;
+  rowIndex: number;
+  columnIndex: number;
+}) => {
+  const trEl: HTMLTableRowElement = tableEl.value?.$el.querySelector("tr[class*='el-table__row']");
+  rowHeight.value = trEl.offsetHeight;
+  return { zIndex: 15 - rowIndex + 1 };
+};
+
+const rowSpan = (course: ICourseObj, columnIndex: number, rowIndex: number) => {
+  if (course) {
+    return course?.time.find((v) => columnIndex === v.weekday && rowIndex + 1 === v.start)?.span;
+  }
+};
 </script>
 
 <template>
   <el-table
     id="scheudel-table"
+    ref="tableEl"
     height="100%"
     :data="displayData"
     :border="true"
-    :span-method="handleRowSpan"
+    :cell-style="cellStyleGuard"
     @cell-mouse-enter="handleCellHoverOn"
     @cell-mouse-leave="handleCellHoverOff"
     @cell-click="handleCellClick"
@@ -119,9 +133,8 @@ onMounted(() => {});
     <template v-for="item in 5" :key="item">
       <el-table-column :prop="item.toString()" :label="`星期${'一二三四五'.at(item - 1)}`" align="center">
         <template #default="scope">
-          <div class="container">
+          <div v-if="scope.row[item]" class="container">
             <el-popover
-              v-if="scope.row[scope.column.no]"
               effect="light"
               trigger="click"
               placement="top"
@@ -130,18 +143,22 @@ onMounted(() => {});
               width="auto"
             >
               <template #default>
-                <p>课程: {{ (scope.row[scope.column.no] as ICourseObj).name }}</p>
-                <p>课序号: {{ (scope.row[scope.column.no] as ICourseObj).cid }}</p>
-                <p>课程号: {{ (scope.row[scope.column.no] as ICourseObj).cnumber }}</p>
-                <p>老师: {{ (scope.row[scope.column.no] as ICourseObj).teacher }}</p>
-                <p>教室: {{ (scope.row[scope.column.no] as ICourseObj).classroom }}</p>
-                <p>学分: {{ (scope.row[scope.column.no] as ICourseObj).credit }}</p>
+                <p>课程: {{ (scope.row[item] as ICourseObj).name }}</p>
+                <p>课序号: {{ (scope.row[item] as ICourseObj).cid }}</p>
+                <p>课程号: {{ (scope.row[item] as ICourseObj).cnumber }}</p>
+                <p>老师: {{ (scope.row[item] as ICourseObj).teacher }}</p>
+                <p>教室: {{ (scope.row[item] as ICourseObj).classroom }}</p>
+                <p>学分: {{ (scope.row[item] as ICourseObj).credit }}</p>
               </template>
               <template #reference>
-                <el-card shadow="hover" class="container card">
-                  <p>{{ (scope.row[scope.column.no] as ICourseObj).name }}</p>
-                  <p>{{ (scope.row[scope.column.no] as ICourseObj).classroom }}</p>
-                  <p>{{ (scope.row[scope.column.no] as ICourseObj).teacher }}</p>
+                <el-card
+                  shadow="hover"
+                  class="card"
+                  :style="{ height: `${(rowHeight - 1) * rowSpan(scope.row[item], item, scope.$index)! + 1}px` }"
+                >
+                  <p>{{ (scope.row[item] as ICourseObj).name }}</p>
+                  <p>{{ (scope.row[item] as ICourseObj).classroom }}</p>
+                  <p>{{ (scope.row[item] as ICourseObj).teacher }}</p>
                 </el-card>
               </template>
             </el-popover>
@@ -153,18 +170,27 @@ onMounted(() => {});
 </template>
 
 <style scoped lang="postcss">
-#scheudel-table {
-  height: 100%;
-}
 .el-table {
-  --el-table-row-hover-bg-color: var(--el-table-bg-color);
+  --el-table-row-hover-bg-color: transparent;
 }
 
 p {
+  font-family: var(--font-family-sans);
   line-height: 2em;
 }
 .card {
-  margin: 2em;
   border: none;
+}
+
+.container {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+}
+</style>
+<style>
+.el-table__body-wrapper .el-scrollbar__bar {
+  z-index: 15;
 }
 </style>
