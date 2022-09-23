@@ -37,7 +37,10 @@ const useRegister = async (
 ) :Promise<DataLogin>=> {
   return useRestfulJson(["register"], {
     method: "POST",
-    body: new URLSearchParams({ username, password, school, email, unumber }),
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ username, password, school, email, unumber }),
   });
 };
 

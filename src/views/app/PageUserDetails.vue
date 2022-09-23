@@ -6,98 +6,86 @@ import image from "/image.png";
 
 const userdata = useUserDataStore();
 
-const back = () => {
-  router.push("/app");
+const userdata = useUserData();
+const userinfo = ref<IDataUser>({ email: "", school: "", unumber: "", username: "" });
+const form = userinfo;
+
+watch(userdata, async (state) => {
+  if (!state.isLoading) {
+    handleUserInfos(state.username);
+  }
+});
+
+onMounted(() => {
+  if (!userdata.isLoading) {
+    handleUserInfos(userdata.username);
+  }
+});
+
+const handleUserInfos = async (username: string) => {
+  if (!username) return;
+  try {
+    userinfo.value = (await getUserData(username)).data;
+  } catch (error) {
+    ElNotification.error({ title: "出错了", message: "用户信息加载失败" });
+  }
+};
+
+const handleUpdateUserInfo = async () => {
+  try {
+    userdata.isLoading = true;
+    const result = await updateUserData(userdata.username, userinfo.value);
+    if (result.code.toString().startsWith("2") && result.data.success) {
+      const { username, school } = result.data;
+      userdata.$patch({
+        username,
+        school,
+      });
+      ElNotification.success({ title: "更新用户信息", message: JSON.stringify(result.data) });
+    } else {
+      throw new Error("User Info Update Error");
+    }
+  } catch (error) {
+    ElNotification.error({ title: "出错了", message: "更新用户信息失败" });
+  } finally {
+    userdata.isLoading = false;
+  }
 };
 </script>
 
 <template>
-  <div style="background-color: #fcfcfc; font-family: 宋体; height: 100%">
-    <div style="margin-top: 25px; margin-left: 80px">
-      <el-row :gutter="10">
-        <el-col :span="3">
-          <div
-            style="
-              background-color: #ffebcd;
-              width: 60px;
-              height: 60px;
-              display: inline-block;
-              border-radius: 50%;
-              overflow: hidden;
-            "
-          >
-            <el-image :src="image" style="width: 60px; height: 60px"></el-image>
-          </div>
-          <div style="margin-top: 5px; margin-left: 1px"><span>学号920xxx</span></div>
-          <div style="margin-top: 50px; margin-left: 8px">
-            <el-button @click="back"><span>返回</span></el-button>
-          </div>
-          <div style="margin-top: 30px; margin-left: 2px">
-            <el-button>修改头像</el-button>
-          </div>
-        </el-col>
-
-        <el-col :span="21">
-          <!-- 个人信息 -->
-          <el-card class="box-card">
-            <template #header>
-              <div class="card-header">
-                <span>用户基础信息</span>
-              </div>
-            </template>
-            <el-descriptions :column="2" size="large" width="500">
-              <el-descriptions-item label="用户名:">kooriookami</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="真实姓名:">慢慢</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="用户名:">kooriookami</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="真实姓名:">慢慢</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="用户名:">kooriookami</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="真实姓名:">慢慢</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="用户名:">kooriookami</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-              <el-descriptions-item label="真实姓名:">慢慢</el-descriptions-item>
-              <el-descriptions-item
-                ><el-button type="primary">修改</el-button></el-descriptions-item
-              >
-            </el-descriptions>
-          </el-card>
-
-          <!-- 修改密码 -->
-        </el-col>
-      </el-row>
-    </div>
-
-    <div></div>
+  <div class="container">
+    <!-- 个人信息 -->
+    <el-card class="box-card">
+      <template #header>
+        <div class="card-header">
+          <span>用户基础信息</span>
+        </div>
+      </template>
+      <el-descriptions border :column="1" size="large">
+        <el-descriptions-item label="用户名: " label-class-name="label-col" label-align="center">{{
+          userinfo.username
+        }}</el-descriptions-item>
+        <el-descriptions-item label="学校: " label-class-name="label-col" label-align="center">{{
+          userinfo.school
+        }}</el-descriptions-item>
+        <el-descriptions-item label="学号: " label-class-name="label-col" label-align="center">{{
+          userinfo.unumber
+        }}</el-descriptions-item>
+        <el-descriptions-item label="邮箱: " label-class-name="label-col" label-align="center">{{
+          userinfo.email
+        }}</el-descriptions-item>
+      </el-descriptions>
+      <div style="margin: 1.5em auto; float: right">
+        <el-button type="primary" @click="dialogFormVisible = true">修改信息</el-button>
+        <!-- <el-button type="primary">修改密码</el-button> -->
+      </div>
+    </el-card>
+    <!-- 修改密码 -->
   </div>
 </template>
 
-<style scoped lang="postcss">
-.name {
-  text-align: right;
-}
-.value {
-  text-align: left;
-}
-
+<style lang="postcss">
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -107,21 +95,8 @@ const back = () => {
 .box-card {
   width: 800px;
 }
-:deep(.el-descriptions__label) {
-  margin-right: 40px;
-  font-size: 14px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #909399;
-}
-:deep(.el-descriptions__cell) {
-  padding-bottom: 35px;
-  text-align: left;
-}
-:deep(.el-descriptions__content) {
-  font-size: 14px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #303133;
+
+.label-col {
+  width: 33%;
 }
 </style>

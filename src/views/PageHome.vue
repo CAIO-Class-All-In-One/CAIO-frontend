@@ -25,7 +25,7 @@ const clickHandler = () => {
     </el-header>
     <el-main>
       <el-row justify="center">
-        <el-col :span="8">
+        <el-col :span="12">
           <div id="main-description">
             <img id="logo" src="/logo.png" alt="logo" width="256" height="256" role="img" />
             <h1>CAIO</h1>
@@ -45,9 +45,7 @@ const clickHandler = () => {
 <style scoped lang="postcss">
 header {
   display: flex;
-  grid-column: full;
   align-items: center;
-  padding: calc(3em / 4) 1em;
   height: var(--page-index-header-height);
   background-color: rgba(255 255 255 / 0.75);
   box-shadow: 0 1px 4px 0 hsl(0deg 0% 0% / 20%);
