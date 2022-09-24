@@ -1,3 +1,4 @@
+import { dayjs } from "element-plus";
 import { useApi } from "./useRestfulJson";
 
 export interface ItemObj {
@@ -22,3 +23,5 @@ export interface ICourseObj extends ItemObj {
 export const getCourses = async (unumber: string) => {
   return useApi<Array<ICourseObj>>(["course", unumber]);
 };
+
+export const useCurrentWeek = (weekStart: number) => dayjs().week() - weekStart + 1;

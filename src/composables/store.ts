@@ -14,7 +14,7 @@ export const useGlobalStore = defineStore("store-global", {
   },
 });
 
-export const useCourseData = defineStore("course-data", {
+export const useAppState = defineStore("state-app", {
   state: () => ({
     week: 1,
   }),

@@ -1,29 +1,31 @@
 <script setup lang="ts">
 import { ElNotification } from "element-plus";
-import { onMounted, reactive, watch } from "vue";
-import { getCourses, ICourseObj, useGlobalStore, useCourseData } from "~/composables";
 import { storeToRefs } from "pinia";
-
-const courseData = useCourseData();
-const { week } = storeToRefs(courseData);
+import { onMounted, reactive, watch } from "vue";
+import { getCourses, ICourseObj, useCurrentWeek } from "~/composables";
+import { useAppState, useGlobalStore } from "~/composables/store";
 
 const courses = reactive<Record<number, ICourseObj>>({});
-const userdata = useGlobalStore();
+const store = useGlobalStore();
+const state = useAppState();
 
-watch(userdata, async (state) => {
+const { week } = storeToRefs(state);
+
+watch(store, async (state) => {
   if (!state.isLoading) {
     handleCourseInfo(state.unumber);
   }
 });
 
 onMounted(() => {
-  if (!userdata.isLoading) {
-    handleCourseInfo(userdata.unumber);
+  if (!store.isLoading) {
+    handleCourseInfo(store.unumber);
   }
 });
 
 const handleCourseInfo = async (unumber: string) => {
   try {
+    state.week = useCurrentWeek(store.weekStart);
     const { data, msg, code } = await getCourses(unumber);
     if (String(code).startsWith("2")) {
       data.forEach((v) => {

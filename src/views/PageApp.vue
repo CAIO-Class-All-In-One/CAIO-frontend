@@ -3,27 +3,29 @@ import { IconDatabaseAlt, IconUser, IconPlug, IconExit } from "@iconify-prerende
 import { storeToRefs } from "pinia";
 import { onBeforeMount, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
-import { useLogout, useGlobalStore, useTestLogin } from "~/composables";
-import { useCourseData } from "~/composables/store";
+import { useLogout, useTestLogin, useCurrentWeek } from "~/composables";
+import { useGlobalStore, useAppState } from "~/composables/store";
 const isCollapse: Ref<boolean> = ref(false);
 
-const userdata = useGlobalStore();
+const store = useGlobalStore();
+const state = useAppState();
 const router = useRouter();
 
+const { week } = storeToRefs(state);
+
 onBeforeMount(async () => {
-  userdata.isLoading = true;
+  store.isLoading = true;
   const { data } = await useTestLogin();
   if (data.success) {
     const { school, unumber, username, weekstart: weekStart } = data;
-    userdata.$patch({ school, unumber, username, weekStart });
-    console.log(`[AppMain]: 进入主页面 用户id: ${userdata.username} 学校: ${userdata.school}`);
+    store.$patch({ school, unumber, username, weekStart });
+    state.$patch({ week: useCurrentWeek(weekStart) });
+    console.log(`[AppMain]: 进入主页面 用户id: ${store.username} 学校: ${store.school}`);
   } else {
     router.replace("/account/login");
   }
-  userdata.isLoading = false;
+  store.isLoading = false;
 });
-const courseData = useCourseData();
-const { week } = storeToRefs(courseData);
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const { week } = storeToRefs(courseData);
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col v-loading="userdata.isLoading" :span="20">
+      <el-col v-loading="store.isLoading" :span="20">
         <router-view></router-view>
       </el-col>
     </el-main>

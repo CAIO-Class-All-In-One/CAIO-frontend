@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useCurrentWeek, useGlobalStore } from "~/composables";
 defineEmits(["weekChange"]);
-const sliderVal = ref(0);
+const sliderVal = ref(useCurrentWeek(useGlobalStore().weekStart));
 </script>
 
 <template>
@@ -10,6 +11,7 @@ const sliderVal = ref(0);
     :step="1"
     show-stops
     show-input
+    :format-tooltip="(value) => `第 ${value} 周`"
     :min="1"
     :max="22"
     @change="
