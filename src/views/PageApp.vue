@@ -17,7 +17,7 @@ onBeforeMount(async () => {
   store.isLoading = true;
   const { data } = await useTestLogin();
   if (data.success) {
-    const { school, unumber, username, weekstart: weekStart } = data;
+    const { school, unumber, username, weekStart } = data;
     store.$patch({ school, unumber, username, weekStart });
     state.$patch({ week: useCurrentWeek(weekStart) });
     console.log(`[AppMain]: 进入主页面 用户id: ${store.username} 学校: ${store.school}`);

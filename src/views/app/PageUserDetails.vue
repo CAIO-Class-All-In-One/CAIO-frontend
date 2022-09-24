@@ -5,7 +5,7 @@ import { ref, onMounted, watch } from "vue";
 import { useGlobalStore, IDataUser, getUserData, updateUserData } from "~/composables";
 
 const data = useGlobalStore();
-const userInfo = ref<IDataUser>();
+const userInfo = ref<IDataUser>({ username: "", school: "", email: "", unumber: "", weekStart: 1 });
 
 watch(data, async (state) => {
   if (!state.isLoading) {
@@ -55,7 +55,13 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
 
 <template>
   <el-scrollbar wrap-class="container">
-    <details-user-card v-bind="userInfo!" />
+    <details-user-card 
+      :username="userInfo.username"
+      :school="userInfo.school"
+      :unumber="userInfo.unumber"
+      :email="userInfo.email"
+      @details-update="handleDetailsUpdate"
+    />
     <details-term-card @details-update="handleDetailsUpdate" />
   </el-scrollbar>
 </template>

@@ -4,11 +4,14 @@ export interface ILoginSucceed {
   username: string;
   school: string;
   unumber: string;
-  weekstart: number;
+  weekStart: number;
 }
 
 const useTestLogin = async () => {
-  return useApi<IOpterationIsSucceed & ILoginSucceed>(["auth", "login"]);
+  return useApi<IOpterationIsSucceed & ILoginSucceed>(["auth", "login"]).then((v) => {
+    v.data.weekStart = v.data.weekStart ?? 1;
+    return v;
+  });
 };
 
 const useLogin = async (username: string, password: string) => {

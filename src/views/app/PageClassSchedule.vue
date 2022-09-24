@@ -1,35 +1,37 @@
 <script setup lang="ts">
 import { ElNotification } from "element-plus";
 import { storeToRefs } from "pinia";
-import { onMounted, reactive, watch } from "vue";
-import { getCourses, ICourseObj, useCurrentWeek } from "~/composables";
+import { onMounted } from "vue";
+import { getCourses, useCurrentWeek } from "~/composables";
 import { useAppState, useGlobalStore } from "~/composables/store";
 
-const courses = reactive<Record<number, ICourseObj>>({});
 const store = useGlobalStore();
 const state = useAppState();
 
-const { week } = storeToRefs(state);
+const { week, courses } = storeToRefs(state);
 
-watch(store, async (state) => {
-  if (!state.isLoading) {
-    handleCourseInfo(state.unumber);
+store.$subscribe((mutation) => {
+  if (!store.isLoading && mutation.type === "patch object" && mutation.payload.unumber) {
+    state.week = useCurrentWeek(store.weekStart);
+    handleCourseInfo(store.unumber);
   }
 });
 
 onMounted(() => {
   if (!store.isLoading) {
-    handleCourseInfo(store.unumber);
+    state.week = useCurrentWeek(store.weekStart);
+    if (Object.keys(state.courses).length === 0) {
+      handleCourseInfo(store.unumber);
+    }
   }
 });
 
 const handleCourseInfo = async (unumber: string) => {
   try {
-    state.week = useCurrentWeek(store.weekStart);
     const { data, msg, code } = await getCourses(unumber);
     if (String(code).startsWith("2")) {
       data.forEach((v) => {
-        courses[v.cnumber] = v;
+        courses.value[v.cnumber] = v;
       });
       console.log(`[App-ClassSchedule]: ${msg}`);
       // ElNotification.success({ title: "获取课程信息", message: msg });

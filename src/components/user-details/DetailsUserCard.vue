@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { IDataUser } from "~/composables";
+import { reactive, ref, watch } from "vue";
 
 const emit = defineEmits(["detailsUpdate"]);
+
+interface Props {
+  username: string;
+  school: string;
+  email: string;
+  unumber: string;
+}
+
 const dialogFormVisible = ref(false);
-const props = defineProps<{ username: string; school: string; email: string; unumber: string; weekStart: number }>();
-const form = ref(props);
+const props = defineProps<Props>();
+const form = reactive({ ...props });
+
 const UserInfoKVMap = [
-  { key: "username", label: "用户名", value: ref(props.username) },
-  { key: "school", label: "学校", value: ref(props.school) },
-  { key: "unumber", label: "学号", value: ref(props.unumber) },
-  { key: "email", label: "邮箱", value: ref(props.email) },
+  { key: "username", label: "用户名" },
+  { key: "school", label: "学校" },
+  { key: "unumber", label: "学号" },
+  { key: "email", label: "邮箱" },
 ];
+
+watch(props, () => {
+  Object.assign(form, { ...props });
+});
 
 const updateUserInfo = () => {
   emit("detailsUpdate", form);
@@ -33,7 +45,7 @@ const updateUserInfo = () => {
         label-class-name="label-col"
         label-align="center"
       >
-        {{ item.value.value }}
+        {{ props[item.key as keyof Props] }}
       </el-descriptions-item>
     </el-descriptions>
     <div style="margin: 1.5em auto; float: right">
@@ -50,7 +62,7 @@ const updateUserInfo = () => {
         :label="`${item.label}: `"
         :label-width="80"
       >
-        <el-input v-model="form[item.key as keyof IDataUser]" autocomplete="off" />
+        <el-input v-model="form[item.key as keyof Props]" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
