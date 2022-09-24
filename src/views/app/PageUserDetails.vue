@@ -54,10 +54,10 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
 </script>
 
 <template>
-  <div class="container">
-    <!-- <details-user-card /> -->
+  <el-scrollbar wrap-class="container">
+    <details-user-card v-bind="userInfo!" />
     <details-term-card @details-update="handleDetailsUpdate" />
-  </div>
+  </el-scrollbar>
 </template>
 
 <style lang="postcss">
@@ -70,10 +70,17 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
 .box-card {
   width: 45vw;
   max-width: 720px;
+  margin-block: 2em;
 }
 
 .botton-group {
   margin: 1.5em auto;
   float: right;
+}
+</style>
+
+<style scoped lang="postcss">
+.container {
+  flex-direction: column;
 }
 </style>
