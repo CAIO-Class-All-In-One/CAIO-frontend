@@ -24,7 +24,7 @@ onBeforeMount(async () => {
   } else {
     router.replace("/account/login");
   }
-  store.isLoading = false;
+  store.$patch({ isLoading: false });
 });
 </script>
 

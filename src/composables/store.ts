@@ -10,8 +10,8 @@ export const useGlobalStore = defineStore("store-global", {
     weekStart: 1,
     isLoading: false,
   }),
-  getters: {
-    isLogin: async () => (await useTestLogin()).data.success,
+  actions: {
+    isLogin: async () => useTestLogin().then((v) => v.data.success),
   },
 });
 

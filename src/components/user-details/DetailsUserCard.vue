@@ -1,4 +1,5 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import { FormInstance } from "element-plus";
 import { reactive, ref, watch } from "vue";
 
 const emit = defineEmits(["detailsUpdate"]);
@@ -13,6 +14,7 @@ interface Props {
 const dialogFormVisible = ref(false);
 const props = defineProps<Props>();
 const form = reactive({ ...props });
+const formEl = ref<FormInstance>();
 
 const UserInfoKVMap = [
   { key: "username", label: "用户名" },
@@ -27,6 +29,20 @@ watch(props, () => {
 
 const updateUserInfo = () => {
   emit("detailsUpdate", form);
+};
+
+const handleUpdateUserInfo = () => {
+  const e = formEl.value;
+  if (!e) return;
+  e.validate((valid) => {
+    if (valid) {
+      dialogFormVisible.value = false;
+      updateUserInfo();
+      return true;
+    } else {
+      return false;
+    }
+  });
 };
 </script>
 <template>
@@ -55,19 +71,31 @@ const updateUserInfo = () => {
   </el-card>
   <!-- 修改信息 -->
   <el-dialog v-model="dialogFormVisible" title="修改信息">
-    <el-form :model="form">
+    <el-form ref="formEl" :model="form">
       <el-form-item
-        v-for="item in UserInfoKVMap.filter((v) => v.key !== 'username')"
+        v-for="item in UserInfoKVMap.filter((v) => v.key !== 'username' && v.key !== 'email')"
         :key="item.key"
         :label="`${item.label}: `"
         :label-width="80"
       >
         <el-input v-model="form[item.key as keyof Props]" autocomplete="off" />
       </el-form-item>
+      <el-form-item
+        prop="email"
+        label="邮箱："
+        :label-width="80"
+        :rules="{
+          type: 'email',
+          message: '请输入正确的邮箱！',
+          trigger: ['blur'],
+        }"
+      >
+        <el-input v-model="form.email" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="(dialogFormVisible = false), updateUserInfo()">确认</el-button>
+        <el-button type="primary" @click="handleUpdateUserInfo">确认</el-button>
         <el-button @click="dialogFormVisible = false">取消</el-button>
       </span>
     </template>

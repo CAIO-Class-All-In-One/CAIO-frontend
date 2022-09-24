@@ -6,7 +6,7 @@ const router = useRouter();
 const userdata = useGlobalStore();
 
 const clickHandler = async () => {
-  const login = await userdata.isLogin;
+  const login = await userdata.isLogin();
   if (login) {
     router.push("/app");
   } else {

@@ -6,7 +6,7 @@ import router from "~/router";
 const userdata = useGlobalStore();
 
 onMounted(async () => {
-  const login = await userdata.isLogin;
+  const login = await userdata.isLogin();
   if (login) {
     router.push("/app");
   }

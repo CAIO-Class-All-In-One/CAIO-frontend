@@ -10,16 +10,20 @@ const state = useAppState();
 
 const { week, courses } = storeToRefs(state);
 
-store.$subscribe((mutation) => {
-  if (!store.isLoading && mutation.type === "patch object" && mutation.payload.unumber) {
-    state.week = useCurrentWeek(store.weekStart);
-    handleCourseInfo(store.unumber);
-  }
-});
+store.$subscribe(
+  (mutation, newState) => {
+    if (!newState.isLoading) {
+      state.week = useCurrentWeek(newState.weekStart);
+      if (Object.keys(state.courses).length === 0 || (mutation.type === "patch object" && mutation.payload.unumber)) {
+        handleCourseInfo(newState.unumber);
+      }
+    }
+  },
+  { detached: true }
+);
 
 onMounted(() => {
   if (!store.isLoading) {
-    state.week = useCurrentWeek(store.weekStart);
     if (Object.keys(state.courses).length === 0) {
       handleCourseInfo(store.unumber);
     }
