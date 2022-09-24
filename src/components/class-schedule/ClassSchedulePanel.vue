@@ -66,18 +66,6 @@ const displayData = computed(() => {
   return display;
 });
 
-const popperOptions = {
-  modifiers: [
-    {
-      name: "preventOverflow",
-      options: {
-        padding: 12,
-        altAxis: true,
-      },
-    },
-  ],
-};
-
 const handleCellClick = () => {
   // TODO
 };
@@ -104,16 +92,6 @@ const cellStyleGuard = ({
   rowHeight.value = trEl.offsetHeight;
   return { zIndex: 15 - rowIndex + 1 };
 };
-
-const rowSpan = (course: ItemObj, columnIndex: number, rowIndex: number) => {
-  if (course) {
-    return course?.time.find((v) => columnIndex === v.weekday && rowIndex + 1 === v.start)?.span;
-  }
-};
-
-const randomHelper = (start: number, end: number) => {
-  return Math.random() * (end - start) + start;
-};
 </script>
 
 <template>
@@ -139,38 +117,19 @@ const randomHelper = (start: number, end: number) => {
       <el-table-column :prop="item.toString()" :label="`星期${'一二三四五'.at(item - 1)}`" align="center">
         <template #default="scope">
           <div v-if="scope.row[item]" class="container">
-            <el-popover
-              effect="light"
-              trigger="click"
-              placement="top"
-              :popper-options="popperOptions"
-              :show-arrow="false"
-              width="auto"
-            >
-              <template #default>
-                <p>课程: {{ (scope.row[item] as ICourseObj).name }}</p>
-                <p>课序号: {{ (scope.row[item] as ICourseObj).cid }}</p>
-                <p>课程号: {{ (scope.row[item] as ICourseObj).cnumber }}</p>
-                <p>老师: {{ (scope.row[item] as ICourseObj).teacher }}</p>
-                <p>教室: {{ (scope.row[item] as ICourseObj).classroom }}</p>
-                <p>学分: {{ (scope.row[item] as ICourseObj).credit }}</p>
-              </template>
-              <template #reference>
-                <el-card
-                  shadow="hover"
-                  class="card"
-                  :style="{ 
-                    height: `${(rowHeight - 1) * rowSpan(scope.row[item], item, scope.$index)! + 1}px`,
-                    backgroundColor: `rgba(${ randomHelper(232, 255) },${ randomHelper(232, 255) },${ randomHelper(232, 255) }, 1)`,
-                    boxShadow: `var(--el-shadow-light)`
-                }"
-                >
-                  <p>{{ (scope.row[item] as ICourseObj).name }}</p>
-                  <p>{{ (scope.row[item] as ICourseObj).classroom }}</p>
-                  <p>{{ (scope.row[item] as ICourseObj).teacher }}</p>
-                </el-card>
-              </template>
-            </el-popover>
+            <schedule-course-item
+              v-if="scope.row[item].type === 'course'"
+              :row-height="rowHeight"
+              :row="scope.row"
+              :item="item"
+              :$index="scope.$index"
+            />
+            <schedule-todo-item
+              v-else-if="scope.row[item].type === 'todo'"
+              :row-height="rowHeight"
+              :row="scope.row"
+              :item="item"
+            />
           </div>
         </template>
       </el-table-column>

@@ -2,7 +2,7 @@
 import { ElNotification, FormInstance } from "element-plus";
 import { onMounted, reactive, ref, watch } from "vue";
 import { usePluginData, useGlobalStore, usePluginApply } from "~/composables";
-import { IPluginData } from "~/composables/plugin";
+import { IPluginData } from "~/composables/action";
 
 const userdata = useGlobalStore();
 const pluginReqDialogVisable = ref(false);

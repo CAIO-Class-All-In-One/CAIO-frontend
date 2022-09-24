@@ -48,6 +48,8 @@ declare module '@vue/runtime-core' {
     RegisterForm: typeof import('./components/form/RegisterForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScheduleCourseItem: typeof import('./components/class-schedule/ScheduleCourseItem.vue')['default']
+    ScheduleTodoItem: typeof import('./components/class-schedule/ScheduleTodoItem.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

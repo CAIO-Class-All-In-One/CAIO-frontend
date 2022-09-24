@@ -34,6 +34,7 @@ onMounted(async () => {
 
 #login-container {
   display: flex;
+  max-width: 440px;
   flex-direction: column;
   height: fit-content;
   box-shadow: var(--box-shadow-light);

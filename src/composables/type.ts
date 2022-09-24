@@ -50,6 +50,7 @@ export interface ItemObj {
     span: number;
     weeks: Array<number>;
   }>;
+  type: "todo" | "course" | "exam";
   extra: any;
 }
 
