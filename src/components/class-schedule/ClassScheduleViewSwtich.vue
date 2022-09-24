@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useCurrentWeek, useGlobalStore } from "~/composables";
+import { useAppState } from "~/composables";
 defineEmits(["weekChange"]);
-const sliderVal = ref(useCurrentWeek(useGlobalStore().weekStart));
+
+const state = useAppState();
+
+const sliderVal = ref(state.week);
+
+state.$subscribe(() => {
+  sliderVal.value = state.week;
+});
 </script>
 
 <template>

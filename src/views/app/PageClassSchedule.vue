@@ -24,6 +24,7 @@ store.$subscribe(
 
 onMounted(() => {
   if (!store.isLoading) {
+    state.week = useCurrentWeek(store.weekStart);
     if (Object.keys(state.courses).length === 0) {
       handleCourseInfo(store.unumber);
     }
@@ -48,4 +49,6 @@ const handleCourseInfo = async (unumber: string) => {
 };
 </script>
 
-<template><ClassSchedulePanel :week="week" :data="courses" /></template>
+<template>
+  <class-schedule-panel :week="week" :data="courses" />
+</template>
