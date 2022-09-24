@@ -6,7 +6,7 @@ import image from "/image.png";
 
 const userdata = useUserDataStore();
 
-const userdata = useUserData();
+
 const userinfo = ref<IDataUser>({ email: "", school: "", unumber: "", username: "" });
 const form = userinfo;
 
