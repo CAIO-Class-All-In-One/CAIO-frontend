@@ -3,7 +3,7 @@ module.exports = {
     require("postcss-preset-env")({
       minimumVendorImplementations: 2,
       stage: 3,
-      browsers: "last 2 Chrome versions, last 1 years",
+      browsers: "last 10 Chrome versions, last 1 years",
       features: {
         "nesting-rules": true,
       },

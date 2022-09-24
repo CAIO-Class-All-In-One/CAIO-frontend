@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TableV2Instance } from "element-plus";
+import { dayjs, TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { computed, ref } from "vue";
 import { ICourseObj } from "~/composables";
@@ -24,8 +24,7 @@ const section = ((
 ) => {
   const _sections: string[] = [];
   sections.forEach((v) => {
-    const startStr = (v.shift() as string).split(":").map((v) => parseInt(v));
-    let start = new Date(0, 0, 0, ...startStr);
+    let start = dayjs("HH:mm", v.shift() as string).toDate();
     (v as number[]).forEach((v) => {
       for (let j = 0; j < v; j++) {
         const _start = new Date(start.getTime());

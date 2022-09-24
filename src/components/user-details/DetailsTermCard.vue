@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import dayjs from "dayjs";
+import { storeToRefs } from "pinia";
+import { ref, watch } from "vue";
 import { useGlobalStore } from "~/composables";
 
 const emit = defineEmits(["detailsUpdate"]);
-const termDate = ref(useGlobalStore().weekStart);
+const store = useGlobalStore();
+const termDate = ref(dayjs().week(store.weekStart).toDate());
+
+watch(storeToRefs(store).weekStart, () => {
+  termDate.value = dayjs().week(store.weekStart).toDate();
+});
 
 const updateTermInfo = () => {
-  emit("detailsUpdate", { weekStart: termDate.value });
+  emit("detailsUpdate", { weekStart: dayjs(termDate.value).week() });
 };
 </script>
 <template>
@@ -19,7 +26,7 @@ const updateTermInfo = () => {
     </template>
     <el-descriptions border :column="1" size="large">
       <el-descriptions-item label="本学期开始时间: " label-class-name="label-col" label-align="center">
-        <el-date-picker v-model="termDate" type="week" format="[第 ww 周] " placeholder="请选择周数" />
+        <el-date-picker v-model="termDate" type="week" format="[第 ]ww[ 周]" placeholder="请选择周数" />
       </el-descriptions-item>
     </el-descriptions>
     <div class="botton-group">

@@ -14,8 +14,8 @@ onBeforeMount(async () => {
   userdata.isLoading = true;
   const { data } = await useTestLogin();
   if (data.success) {
-    const { school, unumber, username } = data;
-    userdata.$patch({ school, unumber, username });
+    const { school, unumber, username, weekstart: weekStart } = data;
+    userdata.$patch({ school, unumber, username, weekStart });
     console.log(`[AppMain]: 进入主页面 用户id: ${userdata.username} 学校: ${userdata.school}`);
   } else {
     router.replace("/account/login");

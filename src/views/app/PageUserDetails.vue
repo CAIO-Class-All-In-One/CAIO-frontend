@@ -6,7 +6,6 @@ import { useGlobalStore, IDataUser, getUserData, updateUserData } from "~/compos
 
 const data = useGlobalStore();
 const userInfo = ref<IDataUser>();
-defineEmits(["detailsUpdate"]);
 
 watch(data, async (state) => {
   if (!state.isLoading) {
@@ -30,6 +29,7 @@ const handleUserInfos = async (username: string) => {
 };
 
 const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
+  console.log(`[App-UserDetails]: Update Info`);
   try {
     data.isLoading = true;
     userInfo.value = Object.assign(userInfo.value!, newData as IDataUser);
@@ -54,9 +54,9 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
 </script>
 
 <template>
-  <div class="container" @details-update="handleDetailsUpdate">
+  <div class="container">
     <!-- <details-user-card /> -->
-    <details-term-card />
+    <details-term-card @details-update="handleDetailsUpdate" />
   </div>
 </template>
 
@@ -68,7 +68,8 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
 }
 
 .box-card {
-  width: 75vw;
+  width: 45vw;
+  max-width: 720px;
 }
 
 .botton-group {

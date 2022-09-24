@@ -4,6 +4,7 @@ export interface ILoginSucceed {
   username: string;
   school: string;
   unumber: string;
+  weekstart: number;
 }
 
 const useTestLogin = async () => {
