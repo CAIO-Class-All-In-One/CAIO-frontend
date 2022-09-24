@@ -1,12 +1,4 @@
-export interface RestfulData<T> {
-  code: number;
-  msg: string;
-  data: T;
-}
-
-export interface IOpterationIsSucceed {
-  success: boolean;
-}
+import { RestfulData } from "./type";
 
 const useRestfulJson = async <DATA>(
   paths: string[],

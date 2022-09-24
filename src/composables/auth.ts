@@ -1,11 +1,5 @@
-import { IOpterationIsSucceed, useApi } from "./useRestfulJson";
-
-export interface ILoginSucceed {
-  username: string;
-  school: string;
-  unumber: string;
-  weekStart: number;
-}
+import { IOpterationIsSucceed, ILoginSucceed } from "./type";
+import { useApi } from "./useRestfulJson";
 
 const useTestLogin = async () => {
   return useApi<IOpterationIsSucceed & ILoginSucceed>(["auth", "login"]).then((v) => {

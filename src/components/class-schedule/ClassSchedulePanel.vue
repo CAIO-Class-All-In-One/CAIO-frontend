@@ -2,15 +2,16 @@
 import { dayjs, TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { computed, ref } from "vue";
-import { ICourseObj } from "~/composables";
+import { ICourseObj, ItemObj } from "~/composables";
 
 const props = defineProps<{
   week: number;
-  data: Record<number, ICourseObj>;
+  courseData: Record<number, ICourseObj>;
+  todoData: ItemObj[];
 }>();
 
 interface ScheduleRowObj {
-  [weekday: number]: ICourseObj | undefined;
+  [weekday: number]: ItemObj | undefined;
 }
 
 const rowHeight = ref(0);
@@ -41,7 +42,7 @@ const section = ((
 })(45, 5, 15, ["8:00", 3, 2], ["14:00", 3, 2], ["19:00", 3]);
 
 const displayData = computed(() => {
-  const data = Object.keys(props.data).map((key) => props.data[Number(key)]);
+  const data = Object.keys(props.courseData).map((key) => props.courseData[Number(key)]);
   const display: Array<ScheduleRowObj> = [];
   for (let i = 1; i <= 13; i++) {
     display[i] = {} as ScheduleRowObj;
@@ -104,7 +105,7 @@ const cellStyleGuard = ({
   return { zIndex: 15 - rowIndex + 1 };
 };
 
-const rowSpan = (course: ICourseObj, columnIndex: number, rowIndex: number) => {
+const rowSpan = (course: ItemObj, columnIndex: number, rowIndex: number) => {
   if (course) {
     return course?.time.find((v) => columnIndex === v.weekday && rowIndex + 1 === v.start)?.span;
   }

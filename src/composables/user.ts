@@ -1,12 +1,5 @@
-import { IOpterationIsSucceed, useApi } from "./useRestfulJson";
-
-export interface IDataUser {
-  username: string;
-  school: string;
-  email: string;
-  unumber: string;
-  weekStart: number; //开始周
-}
+import { IDataUser, IOpterationIsSucceed } from "./type";
+import { useApi } from "./useRestfulJson";
 
 const getUserData = async (username: string) => {
   return useApi<IDataUser>(["user", username]).then((v) => {

@@ -50,5 +50,5 @@ const handleCourseInfo = async (unumber: string) => {
 </script>
 
 <template>
-  <class-schedule-panel :week="week" :data="courses" />
+  <class-schedule-panel :week="week" :course-data="courses" />
 </template>

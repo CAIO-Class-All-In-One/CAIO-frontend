@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useTestLogin } from "./auth";
-import { ICourseObj } from "./course";
+import { ICourseObj } from "./type";
 
 export const useGlobalStore = defineStore("store-global", {
   state: () => ({
