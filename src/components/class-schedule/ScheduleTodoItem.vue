@@ -57,3 +57,9 @@ const popperOptions = {
     </template>
   </el-popover>
 </template>
+
+<style scoped>
+.card {
+  border: none;
+}
+</style>

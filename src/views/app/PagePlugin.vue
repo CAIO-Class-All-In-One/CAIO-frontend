@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance } from "element-plus";
 import { onMounted, reactive, ref, watch } from "vue";
-import { usePluginData, useGlobalStore, usePluginApply } from "~/composables";
-import { IPluginData } from "~/composables/action";
+import { useGlobalStore, usePluginApply, getPluginData } from "~/composables";
+import { IDataPlugin } from "~/composables";
 
 const userdata = useGlobalStore();
 const pluginReqDialogVisable = ref(false);
@@ -15,11 +15,11 @@ const plguinReqForm = reactive({
 const curRepo = ref("");
 const verifycodeSrc = ref("");
 
-const plugins = ref<IPluginData[]>([]);
+const plugins = ref<IDataPlugin[]>([]);
 
 const handlePluginInfos = async () => {
   if (!userdata.school) return;
-  plugins.value = (await usePluginData(userdata.school, "school")).data;
+  plugins.value = (await getPluginData(userdata.school, "school")).data;
 };
 
 const applyPlugin = async (repo: string, params: any) => {

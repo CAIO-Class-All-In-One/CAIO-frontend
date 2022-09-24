@@ -74,3 +74,13 @@ const rowSpan = <ITEM extends ItemObj>(item: ITEM, columnIndex: number, rowIndex
     </template>
   </el-popover>
 </template>
+
+<style scoped>
+p {
+  font-family: var(--font-family-sans);
+  line-height: 2em;
+}
+.card {
+  border: none;
+}
+</style>

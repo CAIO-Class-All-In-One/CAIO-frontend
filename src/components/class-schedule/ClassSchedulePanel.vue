@@ -142,14 +142,6 @@ const cellStyleGuard = ({
   --el-table-row-hover-bg-color: transparent;
 }
 
-p {
-  font-family: var(--font-family-sans);
-  line-height: 2em;
-}
-.card {
-  border: none;
-}
-
 .container {
   position: absolute;
   display: block;
