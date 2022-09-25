@@ -5,8 +5,13 @@ export const getCourses = async (unumber: string) => {
   return useApi<Array<ICourseObj>>(["course", unumber]);
 };
 
-export const getTodos = async (unumber: string) => {
-  return useApi<Array<ItemObj>>(["todo", unumber]);
+export const getTodos = async (username: string) => {
+  return useApi<Array<ItemObj>>(["todo", username]).then((v) => {
+    v.data.forEach((todo) => {
+      todo.extra = { todoId: todo.extra.todoid };
+    });
+    return v;
+  });
 };
 
 export const getPluginData = async (query: string, type: "uid" | "repo" | "school") => {

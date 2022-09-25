@@ -42,9 +42,9 @@ const popperOptions = {
     <template #reference>
       <el-card
         shadow="hover"
-        class="card"
+        class="schedule-item-card"
         :style="{
-          height: `${rowHeight}px`,
+          height: `${rowHeight - 1}px`,
           backgroundColor: `rgba(${useRangeRandom(232, 255)},${useRangeRandom(232, 255)},${useRangeRandom(
             232,
             255
@@ -59,7 +59,5 @@ const popperOptions = {
 </template>
 
 <style scoped>
-.card {
-  border: none;
-}
+
 </style>

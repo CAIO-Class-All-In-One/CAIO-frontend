@@ -9,12 +9,12 @@ interface ScheduleRowObj {
 interface Props {
   rowHeight: number;
   item: number;
-  $index: number;
+  index: number;
   row: ScheduleRowObj;
 }
 
 const props = defineProps<Props>();
-const { rowHeight, item, row, $index } = toRefs(props);
+const { rowHeight, item, row, index } = toRefs(props);
 
 const popperOptions = {
   modifiers: [
@@ -54,9 +54,9 @@ const rowSpan = <ITEM extends ItemObj>(item: ITEM, columnIndex: number, rowIndex
     <template #reference>
       <el-card
         shadow="hover"
-        class="card"
+        class="schedule-item-card"
         :style="{ 
-                    height: `${(rowHeight - 1) * rowSpan(row[item]!, item, $index)! + 1}px`,
+                    height: `${(rowHeight - 1) * rowSpan(row[item]!, item, index)! + 1}px`,
                     backgroundColor: `rgba(${ 
                         useRangeRandom(232, 255)
                     } ${ 
@@ -80,7 +80,5 @@ p {
   font-family: var(--font-family-sans);
   line-height: 2em;
 }
-.card {
-  border: none;
-}
+
 </style>

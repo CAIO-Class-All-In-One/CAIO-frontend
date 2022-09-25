@@ -42,7 +42,10 @@ const section = ((
 })(45, 5, 15, ["8:00", 3, 2], ["14:00", 3, 2], ["19:00", 3]);
 
 const displayData = computed(() => {
-  const data = Object.keys(props.courseData).map((key) => props.courseData[Number(key)]);
+  const data: ItemObj[] = Object.keys(props.courseData).map((key) => props.courseData[Number(key)]);
+  const { todoData } = props;
+  data.push(...todoData);
+
   const display: Array<ScheduleRowObj> = [];
   for (let i = 1; i <= 13; i++) {
     display[i] = {} as ScheduleRowObj;
@@ -51,14 +54,14 @@ const displayData = computed(() => {
     }
   }
 
-  data.forEach((courseData) => {
-    courseData.time.forEach((courseTime) => {
-      if (courseTime.weeks.includes(props.week)) {
-        const { start: x, weekday: y } = courseTime;
+  data.forEach((item) => {
+    item.time.forEach((time) => {
+      if (time.weeks.includes(props.week)) {
+        const { start: x, weekday: y } = time;
         if (x >= 14 || y >= 6) {
           return;
         }
-        display[x][y] = courseData;
+        display[x][y] = item;
       }
     });
   });
@@ -122,7 +125,7 @@ const cellStyleGuard = ({
               :row-height="rowHeight"
               :row="scope.row"
               :item="item"
-              :$index="scope.$index"
+              :index="scope.$index"
             />
             <schedule-todo-item
               v-else-if="scope.row[item].type === 'todo'"
@@ -149,8 +152,11 @@ const cellStyleGuard = ({
   left: 0;
 }
 </style>
-<style>
+<style lang="postcss">
 .el-table__body-wrapper .el-scrollbar__bar {
   z-index: 15;
+}
+.schedule-item-card {
+  border: none;
 }
 </style>

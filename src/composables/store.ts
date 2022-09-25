@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useTestLogin } from "./auth";
-import { ICourseObj } from "./type";
+import { ICourseObj, ItemObj } from "./type";
 
 export const useGlobalStore = defineStore("store-global", {
   state: () => ({
@@ -20,8 +20,10 @@ export const useAppState = defineStore("state-app", {
     ({
       week: 1,
       courses: {},
+      todos: [],
     } as {
       week: number;
       courses: Record<number, ICourseObj>;
+      todos: ItemObj[];
     }),
 });
