@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance } from "element-plus";
 import { onMounted, reactive, ref, watch } from "vue";
-import { useGlobalStore, usePluginApply, getPluginData } from "~/composables";
+import { useGlobalStore, usePluginApply, getPluginData, useAppState } from "~/composables";
 import { IDataPlugin } from "~/composables";
 
 const userdata = useGlobalStore();
@@ -30,6 +30,9 @@ const applyPlugin = async (repo: string, params: any) => {
     ElNotification.success({ title: `插件: ${repo}`, message: "导入成功" });
     curRepo.value = "";
     verifycodeSrc.value = "";
+    useAppState().$patch((_state) => {
+      _state.courses = {};
+    });
   } else {
     verifycodeSrc.value = info.verifyCode ?? "";
     curRepo.value = repo;

@@ -152,10 +152,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
   & .item {
     align-items: center;
     justify-content: center;
-    .registerAction {
+    & .registerAction {
       display: flex;
       justify-content: space-between;
-      .el-button {
+      & .el-button {
         padding: 0;
       }
     }
