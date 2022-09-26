@@ -16,8 +16,8 @@ export const addTodo = async (unumber: string) => {
   });
 };
 
-export const delTodo = async (unumber: string) => {
-  return useApi<ItemObj>(["todo", unumber], {
+export const delTodo = async (username: string, todoid: number) => {
+  return useApi<IOpterationIsSucceed>(["todo", username, todoid.toString()], {
     method: "DELETE",
   });
 };

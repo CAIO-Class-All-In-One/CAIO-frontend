@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
+import { toRefs, computed } from "vue";
 import { ICourseObj, ItemObj, useRangeRandom } from "~/composables";
 
 interface ScheduleRowObj {
@@ -33,6 +33,14 @@ const rowSpan = <ITEM extends ItemObj>(item: ITEM, columnIndex: number, rowIndex
     return item?.time.find((v) => columnIndex === v.weekday && rowIndex + 1 === v.start)?.span;
   }
 };
+
+const classroom = computed(() => {
+  const _weekday = item.value;
+  const _index = row.value[_weekday]?.time.findIndex((v) => {
+    return v.start == index.value + 1 && v.weekday == _weekday;
+  });
+  return row.value[item.value]?.classroom.split(",")[_index!];
+});
 </script>
 <template>
   <el-popover
@@ -48,7 +56,7 @@ const rowSpan = <ITEM extends ItemObj>(item: ITEM, columnIndex: number, rowIndex
       <p>课序号: {{ row[item]?.cid }}</p>
       <p>课程号: {{ row[item]?.cnumber }}</p>
       <p>老师: {{ row[item]?.teacher }}</p>
-      <p>教室: {{ row[item]?.classroom }}</p>
+      <p>教室: {{ classroom }}</p>
       <p>学分: {{ row[item]?.credit }}</p>
     </template>
     <template #reference>
@@ -68,7 +76,7 @@ const rowSpan = <ITEM extends ItemObj>(item: ITEM, columnIndex: number, rowIndex
                 }"
       >
         <p>{{ row[item]?.name }}</p>
-        <p>{{ row[item]?.classroom }}</p>
+        <p>{{ classroom }}</p>
         <p>{{ row[item]?.teacher }}</p>
       </el-card>
     </template>
@@ -80,5 +88,4 @@ p {
   font-family: var(--font-family-sans);
   line-height: 2em;
 }
-
 </style>

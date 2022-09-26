@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { dayjs, TableV2Instance } from "element-plus";
+import { dayjs, ElMessageBox, ElNotification, TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { computed, ref } from "vue";
-import { ICourseObj, ItemObj } from "~/composables";
+import { ICourseObj, ItemObj, useAppState } from "~/composables";
 
 const props = defineProps<{
   week: number;
@@ -69,8 +69,51 @@ const displayData = computed(() => {
   return display;
 });
 
-const handleCellClick = () => {
-  // TODO
+const useTableItem = (row: ScheduleRowObj, column: TableColumnCtx<ScheduleRowObj>) => {
+  return row[column.no];
+};
+
+const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement) => {
+  const item = useTableItem(row, column);
+  if (item) {
+    return;
+  }
+  ElMessageBox.prompt("输入Todo内容", "Todo", {
+    confirmButtonText: "添加",
+    cancelButtonText: "取消",
+  })
+    .then(({ value }) => {
+      console.log(row, cell);
+    })
+    .then(() => {
+      ElNotification.success(`添加Todo: ${msg}`);
+      useAppState().$patch((_state) => {
+        _state.todos.push();
+      });
+    })
+    .catch((err) => {
+      if (err !== "cancel") {
+        ElNotification.error(`添加Todo失败: ${err}`);
+      }
+    });
+
+  // const todo = row.value[item.value]!;
+  // try {
+  //   const { code, data, msg } = await delTodo(store.username, todo.extra.todoId);
+  //   if (code.toString().startsWith("2") && data.success) {
+  //     ElNotification.success(`删除Todo: ${msg}`);
+  //     state.$patch((_state) => {
+  //       const ind = _state.todos.findIndex((v) => {
+  //         return v === todo;
+  //       });
+  //       _state.todos.splice(ind, 1);
+  //     });
+  //   } else {
+  //     throw new Error(msg);
+  //   }
+  // } catch (err) {
+  //
+  // }
 };
 
 const handleCellHoverOn = () => {
@@ -117,7 +160,12 @@ const cellStyleGuard = ({
       </template>
     </el-table-column>
     <template v-for="item in 5" :key="item">
-      <el-table-column :prop="item.toString()" :label="`星期${'一二三四五'.at(item - 1)}`" align="center">
+      <el-table-column
+        :prop="item.toString()"
+        :label="`星期${'一二三四五'.at(item - 1)}`"
+        :resizable="false"
+        align="center"
+      >
         <template #default="scope">
           <div v-if="scope.row[item]" class="container">
             <schedule-course-item
@@ -134,6 +182,7 @@ const cellStyleGuard = ({
               :item="item"
             />
           </div>
+          <div v-if="!scope.row[item]" class="empty container"></div>
         </template>
       </el-table-column>
     </template>
@@ -150,6 +199,11 @@ const cellStyleGuard = ({
   display: block;
   top: 0;
   left: 0;
+}
+
+.empty:hover {
+  transition: all 0.3s;
+  box-shadow: 0 0 4px 0 rgba(0 0 0/ 12%) inset;
 }
 </style>
 <style lang="postcss">

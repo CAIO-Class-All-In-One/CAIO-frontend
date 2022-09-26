@@ -5,3 +5,5 @@ export const useRangeRandom = (start: number, end: number) => {
 };
 
 export const useCurrentWeek = (weekStart: number) => dayjs().week() - weekStart + 1;
+
+//TODO: export const getData
