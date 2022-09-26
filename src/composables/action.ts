@@ -10,9 +10,13 @@ export const usePluginApply = async (repo: string, info: { [K: string]: string }
 };
 
 //todo
-export const addTodo = async (unumber: string) => {
-  return useApi<ItemObj>(["todo", unumber], {
+export const addTodo = async (username: string, todo: ItemObj) => {
+  return useApi<ItemObj>(["todo", username], {
     method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(todo),
   });
 };
 

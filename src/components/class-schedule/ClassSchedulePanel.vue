@@ -2,7 +2,7 @@
 import { dayjs, ElMessageBox, ElNotification, TableV2Instance } from "element-plus";
 import { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { computed, ref } from "vue";
-import { ICourseObj, ItemObj, useAppState } from "~/composables";
+import { addTodo, ICourseObj, ItemObj, useAppState, useGlobalStore } from "~/composables";
 
 const props = defineProps<{
   week: number;
@@ -73,9 +73,10 @@ const useTableItem = (row: ScheduleRowObj, column: TableColumnCtx<ScheduleRowObj
   return row[column.no];
 };
 
-const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement) => {
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
+const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement, event: any) => {
   const item = useTableItem(row, column);
-  if (item) {
+  if (item || column.no == 0) {
     return;
   }
   ElMessageBox.prompt("输入Todo内容", "Todo", {
@@ -83,37 +84,38 @@ const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement) =>
     cancelButtonText: "取消",
   })
     .then(({ value }) => {
-      console.log(row, cell);
+      const weekday = (event.target as HTMLElement).getAttribute("data-col")!;
+      const start = (event.target as HTMLElement).getAttribute("data-row")!;
+      const todo: ItemObj = {
+        extra: null,
+        name: value,
+        type: "todo",
+        time: [
+          {
+            span: 1,
+            start: parseInt(start),
+            weekday: parseInt(weekday),
+            weeks: useAppState().week as unknown as number[],
+          },
+        ],
+      };
+      return addTodo(useGlobalStore().username, todo);
     })
-    .then(() => {
-      ElNotification.success(`添加Todo: ${msg}`);
-      useAppState().$patch((_state) => {
-        _state.todos.push();
-      });
+    .then(({ code, data, msg }) => {
+      if (code.toString().startsWith("2")) {
+        ElNotification.success(`添加Todo: ${msg}`);
+        useAppState().$patch((_state) => {
+          _state.todos.push(data);
+        });
+      } else {
+        throw new Error(msg);
+      }
     })
     .catch((err) => {
       if (err !== "cancel") {
         ElNotification.error(`添加Todo失败: ${err}`);
       }
     });
-
-  // const todo = row.value[item.value]!;
-  // try {
-  //   const { code, data, msg } = await delTodo(store.username, todo.extra.todoId);
-  //   if (code.toString().startsWith("2") && data.success) {
-  //     ElNotification.success(`删除Todo: ${msg}`);
-  //     state.$patch((_state) => {
-  //       const ind = _state.todos.findIndex((v) => {
-  //         return v === todo;
-  //       });
-  //       _state.todos.splice(ind, 1);
-  //     });
-  //   } else {
-  //     throw new Error(msg);
-  //   }
-  // } catch (err) {
-  //
-  // }
 };
 
 const handleCellHoverOn = () => {
@@ -182,7 +184,7 @@ const cellStyleGuard = ({
               :item="item"
             />
           </div>
-          <div v-if="!scope.row[item]" class="empty container"></div>
+          <div v-if="!scope.row[item]" class="empty container" :data-col="item" :data-row="scope.$index"></div>
         </template>
       </el-table-column>
     </template>
