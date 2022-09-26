@@ -18,7 +18,7 @@ const clickHandler = async () => {
 <template>
   <el-container>
     <el-header>
-      <base-header />
+      <home-header />
     </el-header>
     <el-main>
       <el-row justify="center">

@@ -95,7 +95,7 @@ const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement, ev
             span: 1,
             start: parseInt(start),
             weekday: parseInt(weekday),
-            weeks: useAppState().week as unknown as number[],
+            weeks: [useAppState().week],
           },
         ],
       };

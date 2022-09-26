@@ -1,7 +1,5 @@
 import App from "../views/PageApp.vue";
 import Home from "../views/PageHome.vue";
-import GuideApp from "../views/guide/PageGuideApp.vue";
-import GuidePlugin from "../views/guide/PageGuidePlugin.vue";
 import Login from "../views/auth/PageLogin.vue";
 import Register from "../views/auth/PageRegister.vue";
 import ForgetPassword from "../views/auth/PageForgetPassword.vue";
@@ -47,8 +45,6 @@ const routes: VueRouter.RouteRecordRaw[] = [
       },
     ],
   },
-  { path: "/guide/app", component: GuideApp },
-  { path: "/guide/plugin", component: GuidePlugin },
   { path: "/account/login", component: Login },
   { path: "/account/forget-password", component: ForgetPassword },
   { path: "/account/register", component: Register },

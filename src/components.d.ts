@@ -8,7 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaseFooter: typeof import('./components/layouts/BaseFooter.vue')['default']
-    BaseHeader: typeof import('./components/layouts/BaseHeader.vue')['default']
     ClassSchedulePanel: typeof import('./components/class-schedule/ClassSchedulePanel.vue')['default']
     ClassScheduleViewSwtich: typeof import('./components/class-schedule/ClassScheduleViewSwtich.vue')['default']
     DetailsTermCard: typeof import('./components/user-details/DetailsTermCard.vue')['default']
@@ -16,7 +15,6 @@ declare module '@vue/runtime-core' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
-    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
@@ -39,8 +37,8 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
-    ElTree: typeof import('element-plus/es')['ElTree']
     GuideSideBar: typeof import('./components/layouts/GuideSideBar.vue')['default']
+    HomeHeader: typeof import('./components/layouts/HomeHeader.vue')['default']
     LoginForm: typeof import('./components/form/LoginForm.vue')['default']
     PluginDetail: typeof import('./components/layouts/PluginDetail.vue')['default']
     PluginList: typeof import('./components/layouts/PluginList.vue')['default']
