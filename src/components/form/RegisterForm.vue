@@ -149,7 +149,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 .form {
   align-items: center;
   justify-content: center;
-  .item {
+  & .item {
     align-items: center;
     justify-content: center;
     .registerAction {
