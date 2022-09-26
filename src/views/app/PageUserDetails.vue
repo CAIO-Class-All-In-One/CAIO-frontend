@@ -34,6 +34,7 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
     data.isLoading = true;
     userInfo.value = Object.assign(userInfo.value!, newData as IDataUser);
     const result = await updateUserData(data.username, userInfo.value);
+    data.$patch({ isLoading: false });
     if (result.code.toString().startsWith("2") && result.data.success) {
       const { username, school, weekStart } = result.data;
       data.$patch({
@@ -47,15 +48,13 @@ const handleDetailsUpdate = async (newData: Partial<IDataUser>) => {
     }
   } catch (err) {
     ElNotification.error({ title: "出错了", message: `更新用户信息失败: ${err}` });
-  } finally {
-    data.isLoading = false;
   }
 };
 </script>
 
 <template>
   <el-scrollbar wrap-class="container">
-    <details-user-card 
+    <details-user-card
       :username="userInfo.username"
       :school="userInfo.school"
       :unumber="userInfo.unumber"

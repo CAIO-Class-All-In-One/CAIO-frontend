@@ -33,6 +33,7 @@ const applyPlugin = async (repo: string, params: any) => {
     useAppState().$patch((_state) => {
       _state.courses = {};
     });
+    useGlobalStore().$patch({ isLoading: false });
   } else {
     verifycodeSrc.value = info.verifyCode ?? "";
     curRepo.value = repo;

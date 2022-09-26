@@ -14,7 +14,7 @@ store.$subscribe(
   (mutation, newState) => {
     if (!newState.isLoading) {
       state.week = useCurrentWeek(newState.weekStart);
-      if (Object.keys(state.courses).length === 0 || (mutation.type === "patch object" && mutation.payload.unumber)) {
+      if (Object.keys(state.courses).length === 0 || mutation.type === "patch object") {
         handleCourseInfo(newState);
       }
     }
