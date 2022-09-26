@@ -39,7 +39,7 @@ const section = ((
     });
   });
   return _sections;
-})(45, 5, 15, ["8:00", 3, 2], ["14:00", 3, 2], ["19:00", 3]);
+})(45, 5, 15, ["8:00", 3, 2], ["14:00", 2, 3], ["19:00", 3]);
 
 const displayData = computed(() => {
   const data: ItemObj[] = Object.keys(props.courseData).map((key) => props.courseData[Number(key)]);
