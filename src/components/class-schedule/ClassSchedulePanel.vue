@@ -45,7 +45,6 @@ const displayData = computed(() => {
   const data: ItemObj[] = Object.keys(props.courseData).map((key) => props.courseData[Number(key)]);
   const { todoData } = props;
   data.push(...todoData);
-
   const display: Array<ScheduleRowObj> = [];
   for (let i = 1; i <= 13; i++) {
     display[i] = {} as ScheduleRowObj;
@@ -76,6 +75,7 @@ const useTableItem = (row: ScheduleRowObj, column: TableColumnCtx<ScheduleRowObj
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement, event: any) => {
   const item = useTableItem(row, column);
+
   if (item || column.no == 0) {
     return;
   }
@@ -93,7 +93,7 @@ const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement, ev
         time: [
           {
             span: 1,
-            start: parseInt(start),
+            start: parseInt(start) + 1,
             weekday: parseInt(weekday),
             weeks: [useAppState().week],
           },
@@ -105,6 +105,8 @@ const handleCellClick = (row: ScheduleRowObj, column: any, cell: HTMLElement, ev
       if (code.toString().startsWith("2")) {
         ElNotification.success(`添加Todo: ${msg}`);
         useAppState().$patch((_state) => {
+          data.extra.todoId = data.extra.todoid;
+          delete data.extra.todoid;
           _state.todos.push(data);
         });
       } else {

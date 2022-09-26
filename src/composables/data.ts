@@ -7,9 +7,13 @@ export const getCourses = async (unumber: string) => {
 
 export const getTodos = async (username: string) => {
   return useApi<Array<ItemObj>>(["todo", username]).then((v) => {
-    v.data.forEach((todo) => {
-      todo.extra = { todoId: todo.extra.todoid };
-    });
+    if (v.data) {
+      v.data.forEach((todo) => {
+        todo.extra = { todoId: todo.extra.todoid };
+      });
+    } else {
+      v.data = [];
+    }
     return v;
   });
 };
